@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EPY 3143 – Cognitive Development & AI in Instruction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            msu: {
+              maroon:     '#5D1725',
+              darkMaroon: '#3D0A14',
+              lightMaroon:'#782333',
+              accent:     '#8A2A3E'
+            }
+          },
+          fontFamily: { sans: ['Segoe UI', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .slide-content { transition: opacity 0.25s ease-in-out; }
+    li { margin-bottom: 0.75rem; }
+    a:focus-visible, button:focus-visible, select:focus-visible {
+      outline: 3px solid #FFB81C;
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    .badge { display: inline-block; padding: 0.35rem 0.9rem; border-radius: 0.5rem; font-weight: 700; font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans flex flex-col min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-msu-maroon text-white px-5 py-3 shadow-md flex items-center justify-between border-b-4 border-msu-darkMaroon">
+    <div class="flex items-center space-x-4">
+      <span class="bg-white text-msu-maroon font-black px-3 py-1 text-lg tracking-wider uppercase rounded shadow-sm">MSU</span>
+      <h1 class="text-xl md:text-2xl font-bold tracking-tight hidden md:block">EPY 3143 – Cognitive Development &amp; Instruction</h1>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="bg-msu-darkMaroon px-4 py-1.5 rounded flex items-center gap-3">
+        <span id="globalTimer" class="font-mono font-bold text-xl text-white">60:00</span>
+        <button onclick="toggleGlobalTimer()" id="timerPlayBtn"
+          class="text-sm bg-msu-lightMaroon hover:bg-rose-900 px-3 py-1 rounded font-bold transition">Start</button>
+        <button onclick="resetTimer()" title="Reset timer"
+          class="text-sm text-white/60 hover:text-white px-2 rounded font-bold transition">↺</button>
+      </div>
+      <select id="slideDropdown" aria-label="Jump to slide" onchange="goToSlide(parseInt(this.value))"
+        class="bg-white text-msu-maroon font-bold text-sm px-3 py-2 rounded border border-gray-300">
+        <option value="0">1. Welcome</option>
+        <option value="1">2. Piaget → AI</option>
+        <option value="2">3. Vygotsky → AI</option>
+        <option value="3">4. Bronfenbrenner → AI</option>
+        <option value="4">5. Applied Task</option>
+        <option value="5">6. Debrief</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center p-6 max-w-7xl mx-auto w-full">
+
+    <!-- SLIDE 0: WELCOME -->
+    <section id="slide-0" class="slide-content w-full">
+      <div class="bg-white rounded-2xl p-10 md:p-16 shadow-2xl border-l-8 border-msu-maroon">
+        <p class="text-xl font-semibold text-msu-maroon uppercase tracking-widest mb-4">EPY 3143 · Fall 2026</p>
+        <h2 class="text-5xl md:text-6xl font-black text-slate-900 leading-tight mb-8">
+          Cognitive Development<br><span class="text-msu-maroon">in the Classroom</span>
+        </h2>
+
+        <div class="bg-slate-900 rounded-2xl px-8 py-7 mb-8 border-l-4 border-msu-maroon">
+          <p class="text-base font-bold text-slate-400 uppercase tracking-widest mb-3">Today's driving question</p>
+          <p class="text-2xl md:text-3xl font-bold text-white leading-snug">
+            What would Piaget, Vygotsky, and Bronfenbrenner say about
+            <span class="text-rose-400">generative AI use in learning?</span>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <span class="badge bg-slate-800 text-white">~10 min · Theory Review</span>
+          <span class="badge bg-msu-maroon text-white">~50 min · Applied Workshop</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 1: PIAGET -->
+    <section id="slide-1" class="slide-content hidden w-full">
+      <div class="bg-white rounded-2xl p-8 shadow-2xl border-l-8 border-msu-maroon">
+        <div class="flex items-baseline gap-4 mb-1">
+          <h2 class="text-4xl font-black text-msu-maroon">Jean Piaget</h2>
+          <span class="text-lg font-semibold text-slate-600 italic">Constructivism &amp; Schema Development</span>
+        </div>
+        <div class="w-full h-0.5 bg-slate-200 mb-6"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- LEFT: Theory -->
+          <div class="space-y-4">
+            <p class="text-xs font-black text-slate-600 uppercase tracking-widest mb-3">The concept</p>
+            <div class="bg-rose-50 p-5 rounded-xl border border-rose-200 space-y-3 text-lg">
+              <p class="text-slate-800">Humans are <strong>active learners</strong> who build knowledge by interacting directly with the physical world.</p>
+              <ul class="list-disc list-outside ml-5 text-slate-700 space-y-2">
+                <li><strong>Assimilation:</strong> new info slots into an existing schema — no real cognitive change.</li>
+                <li><strong>Accommodation:</strong> the schema itself must restructure. Requires <em>disequilibrium</em> — the productive struggle that drives real learning.</li>
+              </ul>
+            </div>
+            <div class="bg-slate-100 p-4 rounded-xl border border-slate-200 text-base text-slate-700">
+              🔑 Your job: <em>engineer</em> the right confusion, then guide them through it.
+            </div>
+          </div>
+
+          <!-- RIGHT: AI Connection -->
+          <div class="space-y-4">
+            <p class="text-xs font-black text-msu-maroon uppercase tracking-widest mb-3">→ What this means for AI</p>
+            <div class="bg-slate-800 p-5 rounded-xl space-y-4 text-lg text-slate-100">
+              <div>
+                <p class="font-bold text-rose-300 mb-1">No true construction</p>
+                <p>LLMs don't interact with a physical world. Knowledge is <strong>static once training ends</strong> — there's no ongoing experience to accommodate.</p>
+              </div>
+              <div>
+                <p class="font-bold text-rose-300 mb-1">Disembodied pattern-matching</p>
+                <p>Where a child builds an internal schema by <em>touching, failing, revising</em>, an LLM maps statistical relationships between tokens. It completes a prediction — it doesn't construct a reality.</p>
+              </div>
+              <div>
+                <p class="font-bold text-rose-300 mb-1">Zero disequilibrium by design</p>
+                <p>AI gives answers immediately. That removes the friction Piaget identified as the engine of deep learning.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: VYGOTSKY -->
+    <section id="slide-2" class="slide-content hidden w-full">
+      <div class="bg-white rounded-2xl p-8 shadow-2xl border-l-8 border-msu-maroon">
+        <div class="flex items-baseline gap-4 mb-1">
+          <h2 class="text-4xl font-black text-msu-maroon">Lev Vygotsky</h2>
+          <span class="text-lg font-semibold text-slate-600 italic">Social Constructivism &amp; ZPD</span>
+        </div>
+        <div class="w-full h-0.5 bg-slate-200 mb-6"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- LEFT: Theory -->
+          <div class="space-y-4">
+            <p class="text-xs font-black text-slate-600 uppercase tracking-widest mb-3">The concept</p>
+            <div class="bg-rose-50 p-5 rounded-xl border border-rose-200 space-y-3 text-lg">
+              <p class="text-slate-800">Cognition is <strong>fundamentally social.</strong> Learning happens in the ZPD — the gap between what a learner can do alone and what they can do <em>with a More Knowledgeable Other (MKO).</em></p>
+              <ul class="list-disc list-outside ml-5 text-slate-700 space-y-2">
+                <li>Humans learn through <strong>associative memory</strong> tied to emotion and social context.</li>
+                <li>Scaffolding requires <em>reading the learner</em> — frustration, readiness, body language.</li>
+                <li>True MKOs bring shared meaning and genuine intent to help.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- RIGHT: AI Connection -->
+          <div class="space-y-4">
+            <p class="text-xs font-black text-msu-maroon uppercase tracking-widest mb-3">→ What this means for AI</p>
+            <div class="bg-slate-800 p-5 rounded-xl space-y-4 text-lg text-slate-100">
+              <div>
+                <p class="font-bold text-rose-300 mb-1">Pattern completion ≠ comprehension</p>
+                <p>LLMs operate through <strong>next-step prediction</strong>. They generate the statistically likely continuation — they don't comprehend the learner's intent or struggle.</p>
+              </div>
+              <div>
+                <p class="font-bold text-rose-300 mb-1">No intersubjectivity</p>
+                <p>AI cannot detect emotional shutdown, frustration, or confusion from tone. The shared meaning Vygotsky saw as essential to real scaffolding simply isn't there.</p>
+              </div>
+              <div>
+                <p class="font-bold text-rose-300 mb-1">No intent to teach</p>
+                <p>A human MKO <em>cares</em> whether learning happens. An LLM predicts tokens — it has no stake in the outcome.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: BRONFENBRENNER -->
+    <section id="slide-3" class="slide-content hidden w-full">
+      <div class="bg-white rounded-2xl p-8 shadow-2xl border-l-8 border-msu-maroon">
+        <div class="flex items-baseline gap-4 mb-1">
+          <h2 class="text-4xl font-black text-msu-maroon">Urie Bronfenbrenner</h2>
+          <span class="text-lg font-semibold text-slate-600 italic">Ecological Systems Theory</span>
+        </div>
+        <div class="w-full h-0.5 bg-slate-200 mb-6"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- LEFT: Theory -->
+          <div class="space-y-3">
+            <p class="text-xs font-black text-slate-600 uppercase tracking-widest mb-3">The concept</p>
+            <div class="bg-rose-50 p-5 rounded-xl border border-rose-200 text-lg space-y-3">
+              <p class="text-slate-800">Development happens within <strong>nested layers of influence</strong> — from direct daily interactions out to broad cultural forces.</p>
+            </div>
+            <div class="grid grid-cols-1 gap-2 text-base">
+              <div class="bg-rose-100 px-4 py-2 rounded-lg border border-rose-300">
+                <span class="font-black text-msu-maroon">Microsystem</span>
+                <span class="text-slate-700 ml-2">Direct, face-to-face interactions: family, classroom, peers</span>
+              </div>
+              <div class="bg-slate-100 px-4 py-2 rounded-lg border border-slate-200">
+                <span class="font-black text-slate-600">Exosystem</span>
+                <span class="text-slate-600 ml-2">Settings that affect the child indirectly — they don't participate, but are shaped by them</span>
+              </div>
+              <div class="bg-slate-100 px-4 py-2 rounded-lg border border-slate-200">
+                <span class="font-black text-slate-600">Macro &amp; Chronosystem</span>
+                <span class="text-slate-600 ml-2">Culture, values, and historical timing of major shifts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: AI Connection -->
+          <div class="space-y-4">
+            <p class="text-xs font-black text-msu-maroon uppercase tracking-widest mb-3">→ What this means for AI</p>
+            <div class="bg-slate-800 p-5 rounded-xl space-y-4 text-lg text-slate-100">
+              <div>
+                <p class="font-bold text-rose-300 mb-1">AI as an exosystem force</p>
+                <p>Currently, AI functions as an <strong>exosystem</strong> influence — it shapes student learning without the student participating in its creation or design.</p>
+              </div>
+              <div>
+                <p class="font-bold text-rose-300 mb-1">No microsystem anchor</p>
+                <p>A human learner is embedded in a microsystem: gravity, touch, family, local culture. AI has none of this. Its "knowledge" is purely derivative of human-authored text — it lacks the <strong>common sense that comes from living in a physical ecological system.</strong></p>
+              </div>
+              <div>
+                <p class="font-bold text-rose-300 mb-1">The workshop question</p>
+                <p>Could AI ever move from an impersonal exosystem tool closer to a microsystem influence — something more like an MKO — for your learners? That's what you'll examine today.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: APPLIED TASK -->
+    <section id="slide-4" class="slide-content hidden w-full">
+      <div class="bg-white rounded-2xl p-10 shadow-2xl border-l-8 border-msu-maroon">
+        <h2 class="text-5xl font-black text-slate-900 mb-2">Applied Task</h2>
+        <p class="text-xl text-slate-600 mb-8">Open your workbench and work through the four parts below.</p>
+
+        <div class="space-y-4 text-xl">
+          <div class="flex gap-4 items-start bg-rose-50 p-5 rounded-xl border border-rose-200">
+            <span class="text-3xl font-black text-msu-maroon min-w-[2rem]">1</span>
+            <div>
+              <p class="font-bold text-slate-900">Choose a concept</p>
+              <p class="text-slate-700">Pick something your future students/clients typically struggle to learn because of their development or prior knowledge.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start bg-slate-50 p-5 rounded-xl border border-slate-200">
+            <span class="text-3xl font-black text-msu-maroon min-w-[2rem]">2</span>
+            <div>
+              <p class="font-bold text-slate-900">Your plan — <em>before</em> AI <span class="font-normal text-slate-500 text-base">(2 pts)</span></p>
+              <p class="text-slate-700">Using Piaget's accommodation and Vygotsky's ZPD + scaffolding, describe what you would do to ensure that concept is understood.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start bg-slate-50 p-5 rounded-xl border border-slate-200">
+            <span class="text-3xl font-black text-msu-maroon min-w-[2rem]">3</span>
+            <div>
+              <p class="font-bold text-slate-900">Try this prompt in any chatbot</p>
+              <p class="text-slate-700 font-mono text-base bg-slate-100 p-3 rounded mt-2 border border-slate-300">
+                "Explain [Your concept] for a student in grade [Your grade] and give me two scaffolds. Don't just simplify vocabulary; actually adjust the type of explanation to match how this age/grade typically thinks."
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start bg-rose-50 p-5 rounded-xl border border-rose-200">
+            <span class="text-3xl font-black text-msu-maroon min-w-[2rem]">4</span>
+            <div>
+              <p class="font-bold text-slate-900">Evaluate <span class="font-normal text-slate-500 text-base">(4 pts)</span> &amp; Peer Feedback <span class="font-normal text-slate-500 text-base">(4 pts)</span></p>
+              <p class="text-slate-700">Did the AI actually reflect stage-appropriate thinking? Could it function as an MKO or Microsystem? Then check a classmate's response and improve it from a student perspective.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: DEBRIEF -->
+    <section id="slide-5" class="slide-content hidden w-full">
+      <div class="bg-white rounded-2xl p-10 shadow-2xl border-l-8 border-msu-maroon">
+        <h2 class="text-5xl font-black text-slate-900 mb-8">Debrief</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xl mb-8">
+          <div class="bg-slate-50 p-8 rounded-xl border border-slate-300">
+            <h3 class="font-black text-slate-700 mb-5 uppercase text-base">AI may reasonably handle</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-4">
+              <li>Generating grade-differentiated explanations</li>
+              <li>Producing practice sets and worked examples</li>
+              <li>Drafting a first-pass scaffold or rubric</li>
+            </ul>
+          </div>
+          <div class="bg-rose-50 p-8 rounded-xl border-2 border-msu-maroon">
+            <h3 class="font-black text-msu-maroon mb-5 uppercase text-base">What stays with the teacher</h3>
+            <ul class="list-disc list-inside text-slate-900 space-y-4 font-semibold">
+              <li>Sensing when a learner has emotionally withdrawn</li>
+              <li>Holding space for productive confusion (not rushing to fix it)</li>
+              <li>Anchoring new concepts in the learner's specific world</li>
+              <li>Knowing when the scaffold needs to disappear</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-slate-100 p-6 rounded-xl border border-slate-300">
+          <p class="text-xl font-bold text-slate-800">
+            Piaget and Vygotsky weren't writing about AI — but their frameworks are sharp enough to tell us exactly where a token predictor falls short. That's the point of theory: it outlasts the technology.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER NAV -->
+  <footer class="bg-white border-t border-slate-200 px-6 py-4 flex justify-between items-center shadow-inner">
+    <button onclick="prevSlide()" class="px-6 py-3 bg-slate-200 font-bold text-slate-800 text-lg rounded hover:bg-slate-300 transition">
+      ← Prev
+    </button>
+    <span id="slideCounter" class="text-sm text-slate-500 font-medium"></span>
+    <button onclick="nextSlide()" class="px-8 py-3 bg-msu-maroon font-bold text-white text-lg rounded shadow hover:bg-msu-darkMaroon transition">
+      Next →
+    </button>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 6;
+    let timerRunning = false;
+    let timerSeconds = 3600; // 60 min full session default
+    let timerInterval = null;
+
+    function updateSlideView() {
+      for (let i = 0; i < totalSlides; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) slide.classList.toggle('hidden', i !== currentSlide);
+      }
+      document.getElementById('slideDropdown').value = currentSlide;
+      document.getElementById('slideCounter').textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) { currentSlide++; updateSlideView(); } }
+    function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlideView(); } }
+    function goToSlide(index) { currentSlide = index; updateSlideView(); }
+
+    function formatTime(s) {
+      const m = Math.floor(s / 60).toString().padStart(2, '0');
+      const sec = (s % 60).toString().padStart(2, '0');
+      return `${m}:${sec}`;
+    }
+
+    function toggleGlobalTimer() {
+      const btn = document.getElementById('timerPlayBtn');
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        btn.innerText = 'Resume';
+      } else {
+        timerRunning = true;
+        btn.innerText = 'Pause';
+        timerInterval = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            document.getElementById('globalTimer').innerText = formatTime(timerSeconds);
+          } else {
+            clearInterval(timerInterval);
+            document.getElementById('timerPlayBtn').innerText = 'Done';
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 3600;
+      document.getElementById('globalTimer').innerText = formatTime(timerSeconds);
+      document.getElementById('timerPlayBtn').innerText = 'Start';
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    updateSlideView();
+  </script>
+</body>
+</html>

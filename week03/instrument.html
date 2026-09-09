@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curiosity and beliefs about intelligence</title>
+<meta name="description" content="Week 3 instrument · Chapter 2 · about 5 minutes">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* EPY 3143 — Concept Brief theme
+   Replaces the narrated slide deck. One self-contained HTML file per week.
+   MSU palette with the measured contrast corrections (see msstate.scss header). */
+
+:root{
+  --maroon:#5D1725; --maroon-deep:#40101A; --maroon-soft:#F2E9EB;
+  --ground:#FFFFFF; --surface:#FAF8F8; --ink:#241E20; --muted:#6E6E6E;
+  --rule:#E4DDDE; --rule-strong:#C1C6C8;
+  --gold:#C99700; --gold-text:#8A6600; --gold-bg:#FBF6E9;
+  --teal:#00A3AD; --teal-text:#01717A; --teal-bg:#E8F6F7;
+  --ok:#2F6B4F; --ok-bg:#EDF5F1; --no:#9B2C2C; --no-bg:#FBEDED;
+}
+@media (prefers-color-scheme:dark){:root{
+  --maroon:#E9A7B2; --maroon-deep:#F3C3CB; --maroon-soft:#2E2126;
+  --ground:#171215; --surface:#1F181B; --ink:#EFE8EA; --muted:#A79DA0;
+  --rule:#382C31; --rule-strong:#4C3C42;
+  --gold:#FFB81C; --gold-text:#FFC94D; --gold-bg:#2A2118;
+  --teal:#5FD3DA; --teal-text:#7FE0E6; --teal-bg:#152628;
+  --ok:#7FCBA4; --ok-bg:#18251F; --no:#F09B9B; --no-bg:#2A1A1A;
+}}
+
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Source Sans 3","Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:17px; line-height:1.62; margin:0 auto; padding:2rem 1.25rem 5rem;
+  max-width:40rem; -webkit-font-smoothing:antialiased;
+}
+h1{font-size:2rem;line-height:1.1;color:var(--maroon);margin:0 0 .2em;text-wrap:balance}
+h2{font-size:1.3rem;line-height:1.2;color:var(--ink);margin:2.6rem 0 .7rem;
+   padding-bottom:.22em;border-bottom:3px solid var(--maroon);text-wrap:balance}
+h3{font-size:1.02rem;margin:1.8rem 0 .5rem;color:var(--maroon)}
+p{margin:0 0 1rem}
+strong{color:var(--maroon-deep)}
+a{color:var(--maroon)}
+code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.88em;
+     background:var(--maroon-soft);color:var(--maroon-deep);padding:.06em .3em;border-radius:2px}
+hr{border:none;border-top:1px solid var(--rule);margin:2.5rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92em;margin:0 0 1.2rem}
+th{text-align:left;color:var(--maroon);border-bottom:2px solid var(--maroon);padding:.35em .6em;
+   font-size:.8em;letter-spacing:.05em;text-transform:uppercase}
+td{border-bottom:1px solid var(--rule);padding:.4em .6em;vertical-align:top}
+.scroll{overflow-x:auto}
+figure{margin:1.5rem 0}
+figure svg{max-width:100%;height:auto;display:block}
+figcaption{font-size:.82em;color:var(--muted);margin-top:.5rem}
+
+/* ---- masthead ---- */
+.brief-head{border-top:4px solid var(--maroon);padding-top:1rem;margin-bottom:2rem}
+.brief-head .moment{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 .5rem}
+.brief-head .sub{color:var(--muted);font-size:.95rem;margin:.3rem 0 0}
+.brief-head .time{font-size:.82rem;color:var(--muted);margin-top:.8rem}
+
+/* ---- callouts ---- */
+.keyline{border-left:5px solid var(--maroon);background:var(--maroon-soft);
+  padding:.7rem 1rem;margin:1.2rem 0;border-radius:0 3px 3px 0}
+.keyline p{margin:0}
+.gotcha{border-left:5px solid var(--gold);background:var(--gold-bg);
+  padding:.7rem 1rem;margin:1.2rem 0;font-size:.94em;border-radius:0 3px 3px 0}
+.gotcha p{margin:0 0 .5rem}.gotcha p:last-child{margin:0}
+.gotcha b{color:var(--gold-text)}
+.defn{margin:0 0 .9rem;line-height:1.45}
+.defn .t{color:var(--maroon);font-weight:600}
+.defn .note{display:block;font-size:.86em;color:var(--muted);margin-top:.15em}
+
+/* ================= COMPONENTS ================= */
+
+/* --- shared shell --- */
+.cmp{border:1px solid var(--rule);border-radius:5px;background:var(--surface);
+  padding:1rem 1.1rem;margin:1.6rem 0}
+.cmp > .lbl{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.5rem}
+.cmp .q{font-weight:600;margin:0 0 .7rem}
+
+/* --- 1. self-check: MCQ with per-distractor feedback --- */
+.opts{display:grid;gap:.4rem;margin:0 0 .3rem}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-size:.95rem;
+  background:var(--ground);color:var(--ink);border:1px solid var(--rule-strong);
+  border-radius:4px;padding:.5rem .75rem;cursor:pointer}
+.opt:hover{border-color:var(--maroon)}
+.opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.opt[aria-pressed="true"]{border-color:var(--maroon);background:var(--maroon-soft)}
+.opt.is-right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.is-wrong{border-color:var(--no);background:var(--no-bg)}
+.opt .mk{font-family:"IBM Plex Mono",monospace;color:var(--muted);margin-right:.5em}
+.fb{font-size:.9rem;line-height:1.45;border-left:3px solid var(--rule-strong);
+  padding:.45rem .7rem;margin-top:.5rem;background:var(--ground);border-radius:0 3px 3px 0}
+.fb.right{border-left-color:var(--ok)}
+.fb.wrong{border-left-color:var(--no)}
+.fb .verdict{font-weight:600;display:block;margin-bottom:.15em}
+.fb.right .verdict{color:var(--ok)}
+.fb.wrong .verdict{color:var(--no)}
+
+/* --- 2. reveal-on-commit --- */
+.commit textarea{width:100%;min-height:4.5rem;font:inherit;font-size:.95rem;
+  padding:.5rem .65rem;border:1px solid var(--rule-strong);border-radius:4px;
+  background:var(--ground);color:var(--ink);resize:vertical}
+.commit textarea:focus-visible{outline:2px solid var(--maroon);outline-offset:1px}
+.commit .go{font:inherit;font-size:.9rem;font-weight:600;margin-top:.55rem;
+  background:var(--maroon);color:#fff;border:none;border-radius:4px;
+  padding:.45rem 1rem;cursor:pointer}
+.commit .go:disabled{background:var(--rule-strong);color:var(--muted);cursor:not-allowed}
+.commit .go:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.commit .locked{margin-top:.8rem;padding-top:.8rem;border-top:1px dashed var(--rule-strong)}
+.commit .hint{font-size:.82rem;color:var(--muted);margin:.4rem 0 0}
+
+/* --- 3. instrument --- */
+.items{display:grid;gap:.1rem;margin:.6rem 0}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.3rem 1rem;align-items:center;
+  padding:.45rem 0;border-bottom:1px solid var(--rule)}
+.item:last-of-type{border-bottom:none}
+.item .txt{font-size:.94rem;line-height:1.35}
+.lik{display:flex;gap:.22rem}
+.lik label{cursor:pointer}
+.lik input{position:absolute;opacity:0;width:0;height:0}
+.lik span{display:grid;place-items:center;width:1.85rem;height:1.85rem;font-size:.8rem;
+  border:1px solid var(--rule-strong);border-radius:3px;color:var(--muted);
+  font-family:"IBM Plex Mono",monospace}
+.lik input:checked + span{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.lik input:focus-visible + span{outline:2px solid var(--maroon);outline-offset:2px}
+.scale-key{font-size:.78rem;color:var(--muted);margin:.2rem 0 .6rem}
+.profile{margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--rule)}
+.bar{display:grid;grid-template-columns:9rem 1fr 3.2rem;gap:.6rem;align-items:center;
+  margin-bottom:.45rem;font-size:.88rem}
+.bar .track{height:.7rem;background:var(--rule);border-radius:99px;position:relative;overflow:hidden}
+/* display:block is load-bearing. .fill is a <span> inside .track, which is NOT a
+   grid item - only .track itself is - so the span stays display:inline and width/
+   height are silently ignored. The bar then renders as an empty track with only the
+   absolutely-positioned .norm marker visible, which blockifies itself. */
+.bar .fill{display:block;height:100%;background:var(--maroon);border-radius:99px;
+  width:0;transition:width .4s ease}
+/* Reference-mean marker. White core with a dark ring so it reads against BOTH
+   grounds it can land on - the pale unfilled track and the maroon fill. Gold
+   fails non-text contrast on the pale track, which is where low scores put it. */
+.bar .norm{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;
+  background:#fff;box-shadow:0 0 0 1px var(--ink);border-radius:1px}
+.bar .val{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.legend{font-size:.78rem;color:var(--muted);margin-top:.5rem}
+.legend .swatch{display:inline-block;width:3px;height:.8rem;background:#fff;
+  box-shadow:0 0 0 1px var(--ink);border-radius:1px;
+  vertical-align:-.1em;margin-right:.4em}
+.legend .norm-note{display:block;margin-top:.25rem}
+
+/* --- 4. AI evaluation (Friction Move frame) --- */
+.frict .step{border-left:3px solid var(--rule-strong);padding:.15rem 0 .15rem .8rem;margin-bottom:.9rem}
+.frict .step.done{border-left-color:var(--maroon)}
+.frict .n{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.15rem}
+.frict .step h4{margin:0 0 .35rem;font-size:.97rem;color:var(--ink)}
+.frict textarea{width:100%;min-height:3.4rem;font:inherit;font-size:.93rem;padding:.45rem .6rem;
+  border:1px solid var(--rule-strong);border-radius:4px;background:var(--ground);
+  color:var(--ink);resize:vertical}
+.frict textarea:focus-visible{outline:2px solid var(--maroon);outline-offset:1px}
+.frict .verdictrow{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.3rem}
+.frict .vbtn{font:inherit;font-size:.85rem;padding:.35rem .8rem;border-radius:99px;cursor:pointer;
+  border:1px solid var(--rule-strong);background:var(--ground);color:var(--ink)}
+.frict .vbtn[aria-pressed="true"]{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.frict .vbtn:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+
+.carry{border:1px dashed var(--maroon);border-radius:5px;background:var(--maroon-soft);
+  padding:.85rem 1rem;margin:1.6rem 0;font-size:.94rem}
+.carry p{margin:0 0 .4rem}.carry p:last-child{margin:0}
+.carry .lbl{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--maroon);display:block;margin-bottom:.4rem}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{.cmp{break-inside:avoid}}
+
+/* ---- instrument: formative feedback bands + result card ---- */
+.fb-band{
+  border-left:3px solid var(--maroon); background:var(--maroon-soft);
+  padding:.5rem .8rem; margin:.5rem 0 0; font-size:.9rem; line-height:1.45;
+  border-radius:0 3px 3px 0;
+}
+.fb-band .band-name{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--maroon); display:block; margin-bottom:.2rem;
+}
+.fb-band.lo{border-left-color:var(--teal)} .fb-band.lo .band-name{color:var(--teal-text)}
+.fb-band.hi{border-left-color:var(--gold)} .fb-band.hi .band-name{color:var(--gold-text)}
+
+.result-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;
+  padding-top:.9rem;border-top:1px solid var(--rule)}
+.result-actions button{
+  font:inherit;font-size:.88rem;font-weight:600;padding:.45rem .9rem;border-radius:4px;
+  cursor:pointer;border:1px solid var(--maroon);background:var(--ground);color:var(--maroon);
+}
+.result-actions button.primary{background:var(--maroon);color:#fff}
+.result-actions button:disabled{opacity:.45;cursor:not-allowed}
+.result-actions button:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.result-note{font-size:.8rem;color:var(--muted);margin:.5rem 0 0;flex-basis:100%}
+.progress-note{font-size:.85rem;color:var(--muted);margin:.3rem 0 0}
+
+
+/* =====================================================================
+   6. Small screens and touch
+   Students who work on a phone are not an edge case here. Two separate
+   questions, so two separate rules:
+
+     (max-width)      is the layout wide enough to sit side by side?
+     (pointer:coarse) is this being operated with a finger?
+
+   A tablet in landscape answers yes to the first and yes to the second,
+   which is why target size is keyed to the pointer, not the viewport.
+   ===================================================================== */
+
+/* ---- touch targets: 2.75rem = 44px, the size a thumb can actually hit ---- */
+@media (pointer:coarse){
+  .lik{gap:.3rem}
+  .lik span{min-width:2.75rem;height:2.75rem;font-size:.95rem;border-radius:6px}
+  .result-actions button,
+  .frict .vbtn,
+  .commit .go{min-height:2.75rem;padding-left:1rem;padding-right:1rem}
+  .opts label{padding-top:.35rem;padding-bottom:.35rem}
+}
+
+/* ---- narrow layout: stack the item, give the scale the full width ---- */
+@media (max-width:640px){
+  .item{grid-template-columns:1fr;gap:.45rem;padding:.7rem 0}
+  .item .txt{font-size:1rem;line-height:1.4}
+
+  /* each option takes an equal share of the row rather than a fixed box */
+  .lik{gap:.3rem}
+  .lik label{flex:1 1 0;min-width:0}
+  .lik span{width:100%;min-width:0;height:2.75rem;font-size:1rem;border-radius:6px}
+
+  /* Ten items means the key scrolls away by item four. Keep it in view. */
+  .scale-key{position:sticky;top:0;z-index:2;background:var(--surface);
+    margin:0 0 .5rem;padding:.55rem 0 .45rem;font-size:.8rem;line-height:1.4;
+    border-bottom:1px solid var(--rule)}
+
+  /* profile bars: label and value on one row, track full width beneath */
+  .bar{grid-template-columns:minmax(0,1fr) auto;gap:.3rem .6rem}
+  .bar > span:first-child{grid-column:1;grid-row:1}
+  .bar > .val{grid-column:2;grid-row:1}
+  .bar > .track{grid-column:1 / -1;grid-row:2;height:.85rem}
+
+  .result-actions button{flex:1 1 auto}
+  .cmp{padding-left:.85rem;padding-right:.85rem}
+}
+
+/* ---- nothing may push the page sideways ---- */
+body{overflow-x:hidden}
+.cmp,.item .txt,.fb-band,.carry{overflow-wrap:break-word}
+
+</style>
+</head>
+<body>
+<div class="brief-head">
+<p class="moment">Reflect · Part 1</p>
+<h1>Curiosity and beliefs about intelligence</h1>
+<p class="sub">Week 3 instrument · Chapter 2 · about 5 minutes</p>
+<p>Two short scales. <strong>Everything is scored in your browser — nothing is sent
+anywhere, and I never see your answers.</strong> You report and interpret them yourself
+in the Reflection.</p>
+<p class="time">About 5 minutes. Answer quickly; first instinct is the useful one.</p>
+</div>
+
+<h2>1 · Epistemic curiosity</h2>
+
+<p>How often is each statement true of you?</p>
+
+<div class="cmp instrument" data-max="4" data-title="EPY 3143 — Epistemic Curiosity">
+<p class="scale-key">1 = almost never · 2 = sometimes · 3 = often · 4 = almost always</p>
+<div class="items">
+<div class="item" data-sub="i_type"><span class="txt">I enjoy exploring new ideas.</span><span class="lik" role="group" aria-label="I enjoy exploring new ideas."><label><input type="radio" name="c1" value="1"><span>1</span></label><label><input type="radio" name="c1" value="2"><span>2</span></label><label><input type="radio" name="c1" value="3"><span>3</span></label><label><input type="radio" name="c1" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="i_type"><span class="txt">I find it fascinating to learn new information.</span><span class="lik" role="group" aria-label="I find it fascinating to learn new information."><label><input type="radio" name="c2" value="1"><span>1</span></label><label><input type="radio" name="c2" value="2"><span>2</span></label><label><input type="radio" name="c2" value="3"><span>3</span></label><label><input type="radio" name="c2" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="i_type"><span class="txt">I enjoy learning about subjects that are unfamiliar to me.</span><span class="lik" role="group" aria-label="I enjoy learning about subjects that are unfamiliar to me."><label><input type="radio" name="c3" value="1"><span>1</span></label><label><input type="radio" name="c3" value="2"><span>2</span></label><label><input type="radio" name="c3" value="3"><span>3</span></label><label><input type="radio" name="c3" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="i_type"><span class="txt">I enjoy discussing abstract concepts.</span><span class="lik" role="group" aria-label="I enjoy discussing abstract concepts."><label><input type="radio" name="c4" value="1"><span>1</span></label><label><input type="radio" name="c4" value="2"><span>2</span></label><label><input type="radio" name="c4" value="3"><span>3</span></label><label><input type="radio" name="c4" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="i_type"><span class="txt">When I learn something new, I want to find out more about it.</span><span class="lik" role="group" aria-label="When I learn something new, I want to find out more about it."><label><input type="radio" name="c5" value="1"><span>1</span></label><label><input type="radio" name="c5" value="2"><span>2</span></label><label><input type="radio" name="c5" value="3"><span>3</span></label><label><input type="radio" name="c5" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="d_type"><span class="txt">It frustrates me not to know the answer to a question.</span><span class="lik" role="group" aria-label="It frustrates me not to know the answer to a question."><label><input type="radio" name="c6" value="1"><span>1</span></label><label><input type="radio" name="c6" value="2"><span>2</span></label><label><input type="radio" name="c6" value="3"><span>3</span></label><label><input type="radio" name="c6" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="d_type"><span class="txt">I work like a fiend at problems that I feel must be solved.</span><span class="lik" role="group" aria-label="I work like a fiend at problems that I feel must be solved."><label><input type="radio" name="c7" value="1"><span>1</span></label><label><input type="radio" name="c7" value="2"><span>2</span></label><label><input type="radio" name="c7" value="3"><span>3</span></label><label><input type="radio" name="c7" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="d_type"><span class="txt">I brood for a long time trying to solve a fundamental problem.</span><span class="lik" role="group" aria-label="I brood for a long time trying to solve a fundamental problem."><label><input type="radio" name="c8" value="1"><span>1</span></label><label><input type="radio" name="c8" value="2"><span>2</span></label><label><input type="radio" name="c8" value="3"><span>3</span></label><label><input type="radio" name="c8" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="d_type"><span class="txt">I can spend hours on one problem because I can't rest without the answer.</span><span class="lik" role="group" aria-label="I can spend hours on one problem because I can't rest without the answer."><label><input type="radio" name="c9" value="1"><span>1</span></label><label><input type="radio" name="c9" value="2"><span>2</span></label><label><input type="radio" name="c9" value="3"><span>3</span></label><label><input type="radio" name="c9" value="4"><span>4</span></label></span></div>
+<div class="item" data-sub="d_type"><span class="txt">If I can't figure something out, I work even harder at it.</span><span class="lik" role="group" aria-label="If I can't figure something out, I work even harder at it."><label><input type="radio" name="c10" value="1"><span>1</span></label><label><input type="radio" name="c10" value="2"><span>2</span></label><label><input type="radio" name="c10" value="3"><span>3</span></label><label><input type="radio" name="c10" value="4"><span>4</span></label></span></div>
+</div>
+<div class="profile">
+<div class="bar" data-sub="i_type"><span>Interest (I-type)</span><span class="track"><span class="fill"></span><span class="norm" hidden></span></span><span class="val"></span></div>
+<div class="bar" data-sub="d_type"><span>Deprivation (D-type)</span><span class="track"><span class="fill"></span><span class="norm" hidden></span></span><span class="val"></span></div>
+<div class="fb-band lo" data-sub="i_type" data-range="1,2.4" hidden><span class="band-name">Lower interest curiosity</span>You do not chase novelty for its own sake. That is not a deficit — but notice that a course structured around exploration will feel like work rather than play, and you may need to build your own reasons to go further than required.</div>
+<div class="fb-band " data-sub="i_type" data-range="2.41,3.2" hidden><span class="band-name">Moderate interest curiosity</span>You explore when something catches you. The practical question is what makes something catch you — because that is the lever you will be pulling on your own students.</div>
+<div class="fb-band hi" data-sub="i_type" data-range="3.21,4" hidden><span class="band-name">Higher interest curiosity</span>Exploring is its own reward for you. Watch for the teaching trap: it is easy to design lessons that would have worked on you, and most of your students will not share this score.</div>
+<div class="fb-band lo" data-sub="d_type" data-range="1,2.4" hidden><span class="band-name">Lower deprivation curiosity</span>Not knowing sits comfortably with you. Piaget would say disequilibrium does not press on you hard — which makes it easier to leave a confusion unresolved. In Chapter 2's terms, the cheap exit is <strong>rejection</strong>, and it will not feel like giving up.</div>
+<div class="fb-band " data-sub="d_type" data-range="2.41,3.2" hidden><span class="band-name">Moderate deprivation curiosity</span>Unresolved questions bother you somewhat. You will push on a confusion if it matters, and let it go if it does not — which is a reasonable strategy and worth being deliberate about.</div>
+<div class="fb-band hi" data-sub="d_type" data-range="3.21,4" hidden><span class="band-name">Higher deprivation curiosity</span>Not knowing genuinely itches. This is disequilibrium as a trait, and it is the engine Piaget describes — you resolve confusions rather than parking them. The cost is that it is hard to stop, and not every question deserves the hours.</div>
+<p class="legend">Scored on this page only.</p>
+<div class="result-actions">
+  <button type="button" class="act-copy primary">Copy my results</button>
+  <button type="button" class="act-download">Download</button>
+  <p class="result-note">Paste or attach these in Part 1 of your Reflection.</p>
+</div>
+</div>
+</div>
+
+<h2>2 · Beliefs about intelligence</h2>
+
+<p>A different response scale — read the anchors again.</p>
+
+<div class="cmp instrument" data-max="6" data-title="EPY 3143 — Theories of Intelligence">
+<p class="scale-key">1 = strongly disagree · 6 = strongly agree</p>
+<div class="items">
+<div class="item" data-sub="entity"><span class="txt">You have a certain amount of intelligence and you can't really do much to change it.</span><span class="lik" role="group" aria-label="You have a certain amount of intelligence and you can't really do much to change it."><label><input type="radio" name="d1" value="1"><span>1</span></label><label><input type="radio" name="d1" value="2"><span>2</span></label><label><input type="radio" name="d1" value="3"><span>3</span></label><label><input type="radio" name="d1" value="4"><span>4</span></label><label><input type="radio" name="d1" value="5"><span>5</span></label><label><input type="radio" name="d1" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="entity"><span class="txt">Your intelligence is something about you that you can't change very much.</span><span class="lik" role="group" aria-label="Your intelligence is something about you that you can't change very much."><label><input type="radio" name="d2" value="1"><span>1</span></label><label><input type="radio" name="d2" value="2"><span>2</span></label><label><input type="radio" name="d2" value="3"><span>3</span></label><label><input type="radio" name="d2" value="4"><span>4</span></label><label><input type="radio" name="d2" value="5"><span>5</span></label><label><input type="radio" name="d2" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="entity"><span class="txt">You can learn new things, but you can't really change your basic intelligence.</span><span class="lik" role="group" aria-label="You can learn new things, but you can't really change your basic intelligence."><label><input type="radio" name="d3" value="1"><span>1</span></label><label><input type="radio" name="d3" value="2"><span>2</span></label><label><input type="radio" name="d3" value="3"><span>3</span></label><label><input type="radio" name="d3" value="4"><span>4</span></label><label><input type="radio" name="d3" value="5"><span>5</span></label><label><input type="radio" name="d3" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="entity"><span class="txt">To be honest, you can't really change how intelligent you are.</span><span class="lik" role="group" aria-label="To be honest, you can't really change how intelligent you are."><label><input type="radio" name="d4" value="1"><span>1</span></label><label><input type="radio" name="d4" value="2"><span>2</span></label><label><input type="radio" name="d4" value="3"><span>3</span></label><label><input type="radio" name="d4" value="4"><span>4</span></label><label><input type="radio" name="d4" value="5"><span>5</span></label><label><input type="radio" name="d4" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="incremental"><span class="txt">No matter who you are, you can significantly change your intelligence level.</span><span class="lik" role="group" aria-label="No matter who you are, you can significantly change your intelligence level."><label><input type="radio" name="d5" value="1"><span>1</span></label><label><input type="radio" name="d5" value="2"><span>2</span></label><label><input type="radio" name="d5" value="3"><span>3</span></label><label><input type="radio" name="d5" value="4"><span>4</span></label><label><input type="radio" name="d5" value="5"><span>5</span></label><label><input type="radio" name="d5" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="incremental"><span class="txt">You can always substantially change how intelligent you are.</span><span class="lik" role="group" aria-label="You can always substantially change how intelligent you are."><label><input type="radio" name="d6" value="1"><span>1</span></label><label><input type="radio" name="d6" value="2"><span>2</span></label><label><input type="radio" name="d6" value="3"><span>3</span></label><label><input type="radio" name="d6" value="4"><span>4</span></label><label><input type="radio" name="d6" value="5"><span>5</span></label><label><input type="radio" name="d6" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="incremental"><span class="txt">No matter how much intelligence you have, you can always change it quite a bit.</span><span class="lik" role="group" aria-label="No matter how much intelligence you have, you can always change it quite a bit."><label><input type="radio" name="d7" value="1"><span>1</span></label><label><input type="radio" name="d7" value="2"><span>2</span></label><label><input type="radio" name="d7" value="3"><span>3</span></label><label><input type="radio" name="d7" value="4"><span>4</span></label><label><input type="radio" name="d7" value="5"><span>5</span></label><label><input type="radio" name="d7" value="6"><span>6</span></label></span></div>
+<div class="item" data-sub="incremental"><span class="txt">You can change even your basic intelligence level considerably.</span><span class="lik" role="group" aria-label="You can change even your basic intelligence level considerably."><label><input type="radio" name="d8" value="1"><span>1</span></label><label><input type="radio" name="d8" value="2"><span>2</span></label><label><input type="radio" name="d8" value="3"><span>3</span></label><label><input type="radio" name="d8" value="4"><span>4</span></label><label><input type="radio" name="d8" value="5"><span>5</span></label><label><input type="radio" name="d8" value="6"><span>6</span></label></span></div>
+</div>
+<div class="profile">
+<div class="bar" data-sub="entity"><span>Fixed view</span><span class="track"><span class="fill"></span><span class="norm" hidden></span></span><span class="val"></span></div>
+<div class="bar" data-sub="incremental"><span>Growth view</span><span class="track"><span class="fill"></span><span class="norm" hidden></span></span><span class="val"></span></div>
+<div class="fb-band lo" data-sub="entity" data-range="1,2.6" hidden><span class="band-name">Low agreement with fixed statements</span>You largely reject the idea that intelligence is set. Check this against your growth score below — if both are low, you may hold a domain-specific view rather than a general one.</div>
+<div class="fb-band " data-sub="entity" data-range="2.61,4.2" hidden><span class="band-name">Mixed</span>You partly agree that intelligence is fixed. Most people land here, and most who land here are thinking of a specific subject while they answer. Which one were you picturing?</div>
+<div class="fb-band hi" data-sub="entity" data-range="4.21,6" hidden><span class="band-name">High agreement with fixed statements</span>You lean toward intelligence being stable. Worth sitting with: this is the belief that makes a struggling student look like evidence of a limit rather than a student mid-accommodation.</div>
+<div class="fb-band lo" data-sub="incremental" data-range="1,2.6" hidden><span class="band-name">Low agreement with growth statements</span>You are sceptical that intelligence changes much. That is a defensible read of the evidence on some constructs — and it will shape how long you persist with a student who is not moving.</div>
+<div class="fb-band " data-sub="incremental" data-range="2.61,4.2" hidden><span class="band-name">Mixed</span>You hold growth beliefs conditionally. Naming the condition is the useful move: change in what, by how much, over what time?</div>
+<div class="fb-band hi" data-sub="incremental" data-range="4.21,6" hidden><span class="band-name">High agreement with growth statements</span>You strongly endorse growth. Now the hard question — <strong>you knew which answer a teacher preparation programme wants.</strong> So does every student who fills out a survey for you.</div>
+<p class="legend">Scored on this page only.</p>
+<div class="result-actions">
+  <button type="button" class="act-copy primary">Copy my results</button>
+  <button type="button" class="act-download">Download</button>
+  <p class="result-note">Paste or attach these in Part 1 of your Reflection.</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h2>Before you write Part 1</h2>
+
+<p><strong>Read your D-type score next to your fixed/growth scores.</strong> High D-type
+with a fixed view is the difficult combination: it bothers you not to know, <em>and</em>
+you believe you cannot change how well you can know. That resolves toward rejection more
+often than accommodation.</p>
+
+<p><strong>Then the part that is not about you.</strong> Curiosity is built by
+opportunity — museums, books in the house, adults with time to answer questions, summers
+at a camp in North Carolina. A student who arrives with less of it has usually had fewer
+chances to develop it, not less capacity for it.</p>
+
+<div class="keyline">
+<p>Which is why <em>"teach to students' interests"</em> is only half a strategy. Taught
+alone, it ratifies the gap.</p>
+<p>The job is to <strong>nurture and expand</strong> curiosity, not merely to discover it.</p>
+</div>
+
+<p>Look at the roster while you write. <strong>D'Andre spends his summers at a talent
+development camp. Nick has never been offered one.</strong> Neither fact is about their
+capacity.</p>
+
+<div class="carry">
+<p class="lbl">In Part 1 of your Reflection</p>
+<p>Your scores · whether they match how you would describe yourself · what these scales
+<strong>cannot</strong> see · and one concrete way you would build curiosity in a student
+who did not walk in with it.</p>
+</div>
+<script>
+/* EPY 3143 — Concept Brief components.
+   Progressive enhancement: every component is fully readable with JS disabled.
+   JS only hides answers and adds interaction. No dependencies. */
+(function () {
+  "use strict";
+  var $  = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ---------- 1. Self-check: MCQ with per-distractor feedback ---------- */
+  $$(".selfcheck").forEach(function (box) {
+    var right = box.getAttribute("data-answer");
+    var fbs = {};
+    $$(".fb", box).forEach(function (f) { fbs[f.getAttribute("data-for")] = f; f.hidden = true; });
+
+    $$(".opt", box).forEach(function (btn) {
+      btn.setAttribute("aria-pressed", "false");
+      btn.addEventListener("click", function () {
+        var pick = btn.getAttribute("data-opt");
+        var ok = pick === right;
+        $$(".opt", box).forEach(function (b) {
+          b.setAttribute("aria-pressed", "false");
+          b.classList.remove("is-right", "is-wrong");
+        });
+        Object.keys(fbs).forEach(function (k) { fbs[k].hidden = true; });
+        btn.setAttribute("aria-pressed", "true");
+        btn.classList.add(ok ? "is-right" : "is-wrong");
+        if (fbs[pick]) {
+          fbs[pick].hidden = false;
+          fbs[pick].classList.add(ok ? "right" : "wrong");
+        }
+        /* On a wrong answer also mark the right one, so the student never leaves confused. */
+        if (!ok) {
+          var r = $('.opt[data-opt="' + right + '"]', box);
+          if (r) r.classList.add("is-right");
+        }
+      });
+    });
+  });
+
+  /* ---------- 2. Reveal-on-commit ---------- */
+  $$(".commit").forEach(function (box) {
+    var ta = $("textarea", box), go = $(".go", box), locked = $(".locked", box);
+    if (!ta || !go || !locked) return;
+    var min = parseInt(box.getAttribute("data-min") || "12", 10);
+    locked.hidden = true;
+    go.disabled = true;
+    var hint = document.createElement("p");
+    hint.className = "hint";
+    hint.textContent = "Commit an answer to unlock the rest. It is not submitted anywhere — the point is that you decided before you read on.";
+    go.insertAdjacentElement("afterend", hint);
+
+    ta.addEventListener("input", function () { go.disabled = ta.value.trim().length < min; });
+    go.addEventListener("click", function () {
+      locked.hidden = false;
+      go.disabled = true;
+      go.textContent = "Unlocked";
+      hint.textContent = "Your answer stays on this page only.";
+      locked.setAttribute("tabindex", "-1");
+      locked.focus();
+    });
+  });
+
+  /* ---------- 3a. The downloadable record -------------------------------
+     Every .instrument on the page registers a snapshot() here. The Download
+     button emits ONE document containing every scale on the page - the items,
+     the student's own response to each, the subscale means, and the band
+     feedback - not a two-line summary. That is what "download the instrument"
+     has to mean: the thing they can attach to the Reflection, read on a phone,
+     or print to PDF for Canvas.
+
+     Written as a standalone accessible document: lang, title, heading order,
+     real tables with scope. Black on white, because it is going to a printer. */
+  var INSTRUMENTS = [];
+
+  function esc(t) {
+    return String(t == null ? "" : t)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /* Local date parts. Never toISOString() here - it reports UTC and stamps
+     the wrong day for anyone west of Greenwich after 6pm. */
+  function stamp(d) {
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
+
+  /* Hand-built SVG. No library, no network, no build step - the record has to
+     open from a Downloads folder on a phone with aeroplane mode on.
+
+     Bars rather than a radar: the ERQ has two subscales and a radar needs three
+     to be a shape at all, and a bar with a reference marker answers the actual
+     question ("am I above or below the sample?") by direct length comparison,
+     which a radar makes you do by eye across unequal axes. */
+  function barsSVG(snap) {
+    var rows = snap.rows;
+    if (!rows.length) return "";
+    /* RIGHT must hold the widest label - "7.00 / US 5.40" in 13px monospace -
+       and axisH must hold the ticks AND the caption line under them, or both
+       fall outside the viewBox and are silently clipped. */
+    var W = 700, LAB = 152, RIGHT = 136, PAD = 10;
+    var x0 = LAB, x1 = W - RIGHT, span = x1 - x0;
+    var rowH = 30, gap = 10, axisH = 56;
+    var H = PAD + rows.length * (rowH + gap) + axisH;
+    var maxPt = snap.maxPt;
+    var pos = function (v) { return x0 + ((v - 1) / (maxPt - 1)) * span; };
+
+    var o = [];
+    o.push('<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" width="100%" ' +
+           'role="img" aria-label="Bar chart of your scale means against the ' +
+           'reference sample means. The same figures appear in the table below." ' +
+           'xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">');
+
+    /* gridlines first, so bars sit on top of them */
+    for (var g = 1; g <= maxPt; g++) {
+      o.push('<line x1="' + pos(g).toFixed(1) + '" y1="' + PAD + '" x2="' +
+             pos(g).toFixed(1) + '" y2="' + (H - axisH + 6) + '" stroke="#ddd" ' +
+             'stroke-width="1"/>');
+    }
+
+    rows.forEach(function (r, i) {
+      var y = PAD + i * (rowH + gap);
+      var mid = y + rowH / 2;
+      o.push('<text x="' + (LAB - 12) + '" y="' + (mid + 5) + '" text-anchor="end" ' +
+             'font-size="14" fill="#1a1a1a">' + esc(r.label) + '</text>');
+      o.push('<rect x="' + x0 + '" y="' + (y + 8) + '" width="' + span +
+             '" height="' + (rowH - 16) + '" rx="7" fill="#e8e4e4"/>');
+      var w = Math.max(0, Math.min(span, pos(r.mean) - x0));
+      o.push('<rect x="' + x0 + '" y="' + (y + 8) + '" width="' + w.toFixed(1) +
+             '" height="' + (rowH - 16) + '" rx="7" fill="#5D1725"/>');
+      if (r.norm != null) {
+        var nx = pos(r.norm);
+        o.push('<rect x="' + (nx - 2).toFixed(1) + '" y="' + (y + 3) + '" width="4" ' +
+               'height="' + (rowH - 6) + '" fill="#ffffff" stroke="#1a1a1a" ' +
+               'stroke-width="1" rx="1"/>');
+      }
+      var lab = r.mean.toFixed(2) + (r.norm != null ? " · US " + r.norm.toFixed(2) : "");
+      o.push('<text x="' + (x1 + 10) + '" y="' + (mid + 5) + '" font-size="13" ' +
+             'fill="#1a1a1a" font-family="ui-monospace, Menlo, monospace">' +
+             esc(lab) + '</text>');
+    });
+
+    /* axis */
+    var ay = H - axisH + 6;
+    o.push('<line x1="' + x0 + '" y1="' + ay + '" x2="' + x1 + '" y2="' + ay +
+           '" stroke="#1a1a1a" stroke-width="1"/>');
+    for (var t = 1; t <= maxPt; t++) {
+      o.push('<text x="' + pos(t).toFixed(1) + '" y="' + (ay + 17) + '" ' +
+             'text-anchor="middle" font-size="12" fill="#555">' + t + '</text>');
+    }
+    o.push('<text x="' + x0 + '" y="' + (ay + 32) + '" font-size="12" fill="#555">' +
+           'Scale point (1–' + maxPt + '). The outlined marker is the reference mean.' +
+           '</text>');
+    o.push('</svg>');
+    return o.join("");
+  }
+
+  function recordHTML() {
+    var d = new Date();
+    var head = document.title || "EPY 3143 instrument";
+    var p = [];
+    p.push('<!doctype html>');
+    p.push('<html lang="en"><head><meta charset="utf-8">');
+    p.push('<meta name="viewport" content="width=device-width, initial-scale=1">');
+    p.push('<title>' + esc(head) + ' — my responses</title>');
+    p.push('<style>' +
+      'body{font:16px/1.55 Georgia,"Times New Roman",serif;color:#1a1a1a;background:#fff;' +
+      'max-width:44em;margin:2rem auto;padding:0 1.1rem}' +
+      'h1{font-size:1.5rem;margin:0 0 .2rem}h2{font-size:1.15rem;margin:2rem 0 .3rem;' +
+      'border-bottom:2px solid #5D1725;padding-bottom:.2rem}h3{font-size:1rem;margin:1.2rem 0 .3rem}' +
+      '.meta{color:#555;font-size:.9rem;margin:0 0 1.5rem}' +
+      'table{border-collapse:collapse;width:100%;margin:.6rem 0;font-size:.93rem}' +
+      'caption{text-align:left;font-style:italic;color:#555;padding-bottom:.3rem}' +
+      'th,td{border:1px solid #bbb;padding:.35rem .5rem;text-align:left;vertical-align:top}' +
+      'th{background:#f2f2f2}td.n{text-align:right;white-space:nowrap;' +
+      'font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace}' +
+      'figure{margin:.8rem 0;padding:0}svg.chart{max-width:100%;height:auto}' +
+      '.band{margin:.4rem 0 0;padding:.5rem .7rem;border-left:4px solid #5D1725;background:#f7f4f4}' +
+      '.band b{display:block}' +
+      '.warn{border-left:4px solid #9D2235;padding:.5rem .7rem;background:#faf3f4}' +
+      '.foot{margin-top:2.5rem;border-top:1px solid #bbb;padding-top:.6rem;' +
+      'color:#555;font-size:.85rem}' +
+      '@media print{body{margin:0;max-width:none}h2{break-after:avoid}table{break-inside:auto}' +
+      'tr{break-inside:avoid}}' +
+      '</style></head><body>');
+    p.push('<h1>' + esc(head) + '</h1>');
+    p.push('<p class="meta">EPY 3143 · Human Development and Learning · completed ' +
+           esc(d.toDateString()) + '</p>');
+
+    INSTRUMENTS.forEach(function (inst) {
+      var snap = inst();
+      p.push('<h2>' + esc(snap.title) + '</h2>');
+      if (snap.key) p.push('<p class="meta">' + esc(snap.key) + '</p>');
+
+      if (snap.left > 0) {
+        p.push('<p class="warn">' + snap.left + ' of ' + snap.items.length +
+               ' items were left unanswered, so this scale was not scored.</p>');
+      }
+
+      p.push('<table><caption>Every item, and the response given.</caption>' +
+             '<thead><tr><th scope="col">Item</th>' +
+             '<th scope="col">Response (1–' + snap.maxPt + ')</th></tr></thead><tbody>');
+      snap.items.forEach(function (it) {
+        p.push('<tr><td>' + esc(it.text) + (it.reverse ? ' <em>(reverse-keyed)</em>' : '') +
+               '</td><td class="n">' + (it.value == null ? "—" : it.value) + '</td></tr>');
+      });
+      p.push('</tbody></table>');
+
+      if (snap.rows.length) {
+        p.push('<h3>Scores</h3>');
+        p.push('<figure>' + barsSVG(snap) + '</figure>');
+        var hasNorm = snap.rows.some(function (r) { return r.norm != null; });
+        p.push('<table><caption>Your mean on each scale' +
+               (hasNorm ? ', beside the published mean for a US sample.' : '.') +
+               '</caption><thead><tr><th scope="col">Scale</th>' +
+               '<th scope="col">Your mean</th>' +
+               (hasNorm ? '<th scope="col">US sample mean</th>' +
+                          '<th scope="col">Difference</th>' : '') +
+               '</tr></thead><tbody>');
+        snap.rows.forEach(function (r) {
+          var d = r.norm != null ? (r.mean - r.norm) : null;
+          p.push('<tr><td>' + esc(r.label) + '</td><td class="n">' +
+                 r.mean.toFixed(2) + ' / ' + snap.maxPt + '</td>' +
+                 (hasNorm
+                   ? '<td class="n">' + (r.norm != null ? r.norm.toFixed(2) : "—") + '</td>' +
+                     '<td class="n">' + (d != null ? (d >= 0 ? "+" : "\u2212") +
+                        Math.abs(d).toFixed(2) : "—") + '</td>'
+                   : '') +
+                 '</tr>');
+        });
+        p.push('</tbody></table>');
+        if (snap.normSource) {
+          p.push('<p class="meta">Reference sample: ' + esc(snap.normSource) +
+                 '. A difference from a sample mean is not a result about you — ' +
+                 'it is a description of where your answers sat relative to one ' +
+                 'group of people, measured once.</p>');
+        }
+        snap.rows.forEach(function (r) {
+          if (r.feedback) {
+            p.push('<p class="band"><b>' + esc(r.label) + '</b>' + esc(r.feedback) + '</p>');
+          }
+        });
+      }
+    });
+
+    p.push('<p class="foot">Scored in your own browser. Nothing was sent anywhere, ' +
+           'and your instructor never saw these answers — you are choosing what to ' +
+           'report in Part 1 of your Reflection.</p>');
+    p.push('</body></html>');
+    return p.join("\n");
+  }
+
+  function downloadRecord(btn) {
+    try {
+      var name = (document.title || "EPY3143_instrument")
+        .replace(/[^\w]+/g, "_").replace(/^_+|_+$/g, "");
+      var blob = new Blob([recordHTML()], { type: "text/html;charset=utf-8" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name + "_" + stamp(new Date()) + ".html";
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 100);
+      var was = btn.textContent;
+      btn.textContent = "Downloaded";
+      setTimeout(function () { btn.textContent = was; }, 2000);
+    } catch (e) {
+      btn.textContent = "Download blocked — use Copy";
+      btn.disabled = true;
+    }
+  }
+
+  /* ---------- 3. Instrument: score, plot, band feedback, export ---------- */
+  $$(".instrument").forEach(function (box) {
+    var out = $(".profile", box);
+    if (!out) return;
+    out.hidden = true;
+
+    var maxPt = parseInt(box.getAttribute("data-max") || "5", 10);
+    var norms = {};
+    try { norms = JSON.parse(box.getAttribute("data-norms") || "{}"); } catch (e) {}
+    var title = box.getAttribute("data-title") || document.title;
+
+    /* progress line so students know how far in they are */
+    var prog = document.createElement("p");
+    prog.className = "progress-note";
+    var itemsEls = $$(".item", box);
+    (box.querySelector(".items") || box).insertAdjacentElement("afterend", prog);
+
+    $$(".fb-band", box).forEach(function (f) { f.hidden = true; });
+
+    /* A gold line on a bar is colour-only information. Whenever a scale carries
+       reference means, say so in words and name the sample - the marker is the
+       shorthand, the sentence is the actual accessible content. */
+    (function () {
+      var src = box.getAttribute("data-norm-source");
+      var keys = Object.keys(norms);
+      if (!keys.length) return;
+      var legend = $(".legend", box);
+      if (!legend) return;
+      var note = document.createElement("span");
+      note.className = "norm-note";
+      note.innerHTML = '<span class="swatch" aria-hidden="true"></span>' +
+        "The marker on each bar is the published mean for a US sample" +
+        (src ? " — " + esc(src) : "") + ". Your own score is the filled portion.";
+      legend.appendChild(note);
+    })();
+
+    function score() {
+      var acc = {};
+      itemsEls.forEach(function (it) {
+        var sub = it.getAttribute("data-sub") || "total";
+        var rev = it.getAttribute("data-reverse") === "true";
+        var chosen = $("input:checked", it);
+        acc[sub] = acc[sub] || { sum: 0, n: 0, total: 0 };
+        acc[sub].total++;
+        if (chosen) {
+          var v = parseInt(chosen.value, 10);
+          if (rev) v = (maxPt + 1) - v;
+          acc[sub].sum += v; acc[sub].n++;
+        }
+      });
+      return acc;
+    }
+
+    var lastRows = [];
+
+    function render() {
+      var acc = score();
+      var answered = itemsEls.filter(function (it) { return $("input:checked", it); }).length;
+      var left = itemsEls.length - answered;
+      prog.textContent = left > 0
+        ? left + (left === 1 ? " item left." : " items left.")
+        : "";
+      if (left > 0) { out.hidden = true; return; }
+      out.hidden = false;
+      lastRows = [];
+
+      $$(".bar", out).forEach(function (bar) {
+        var k = bar.getAttribute("data-sub");
+        if (!acc[k] || !acc[k].n) return;
+        var mean = acc[k].sum / acc[k].n;
+        var pct = ((mean - 1) / (maxPt - 1)) * 100;
+        var fill = $(".fill", bar), val = $(".val", bar), norm = $(".norm", bar);
+        if (fill) fill.style.width = Math.max(0, Math.min(100, pct)) + "%";
+        if (val) val.textContent = mean.toFixed(2);
+        if (norm) {
+          if (norms[k] != null) {
+            norm.style.left = Math.max(0, Math.min(100, ((norms[k] - 1) / (maxPt - 1)) * 100)) + "%";
+            norm.hidden = false;
+          } else { norm.hidden = true; }
+        }
+        var label = (bar.querySelector("span") || {}).textContent || k;
+        lastRows.push({ key: k, label: label.trim(), mean: mean,
+                        norm: (norms[k] != null ? norms[k] : null) });
+
+        /* formative band: show the one whose range contains the mean */
+        var shown = null;
+        $$('.fb-band[data-sub="' + k + '"]', box).forEach(function (f) {
+          var r = (f.getAttribute("data-range") || "").split(",").map(parseFloat);
+          var hit = r.length === 2 && mean >= r[0] && mean <= r[1];
+          f.hidden = !hit;
+          if (hit) shown = f;
+        });
+        if (shown) lastRows[lastRows.length - 1].feedback =
+          (shown.textContent || "").replace(/\s+/g, " ").trim();
+      });
+    }
+
+    function asText() {
+      var d = new Date();
+      var lines = [title, d.toDateString(), ""];
+      lastRows.forEach(function (r) {
+        lines.push(r.label + ": " + r.mean.toFixed(2) + " / " + maxPt +
+          (r.norm != null ? "   (US sample mean " + r.norm.toFixed(2) + ")" : ""));
+        if (r.feedback) lines.push("  " + r.feedback);
+        lines.push("");
+      });
+      lines.push("Scored in the browser. Nothing was sent anywhere.");
+      return lines.join("\n");
+    }
+
+    var acts = $(".result-actions", box);
+    if (acts) {
+      var copyBtn = $(".act-copy", acts), dlBtn = $(".act-download", acts);
+      if (copyBtn) copyBtn.addEventListener("click", function () {
+        var txt = asText();
+        var done = function () { copyBtn.textContent = "Copied"; setTimeout(function () { copyBtn.textContent = "Copy my results"; }, 2000); };
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(txt).then(done, fallback);
+        } else { fallback(); }
+        function fallback() {
+          var ta = document.createElement("textarea");
+          ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+          document.body.appendChild(ta); ta.select();
+          try { document.execCommand("copy"); done(); }
+          catch (e) { copyBtn.textContent = "Select the text above"; }
+          document.body.removeChild(ta);
+        }
+      });
+      /* Downloads the whole page - every scale, every item, every answer -
+         not just this block's two-line summary. A student who finishes on
+         either scale gets the same complete file. */
+      if (dlBtn) {
+        dlBtn.textContent = "Download my answers";
+        dlBtn.addEventListener("click", function () { downloadRecord(dlBtn); });
+      }
+    }
+
+    /* Register this scale so the page-level record can include it whole. */
+    INSTRUMENTS.push(function () {
+      var left = 0;
+      var items = itemsEls.map(function (it) {
+        var chosen = $("input:checked", it);
+        if (!chosen) left++;
+        var txt = $(".txt", it);
+        return {
+          text: txt ? txt.textContent.trim() : "",
+          reverse: it.getAttribute("data-reverse") === "true",
+          value: chosen ? parseInt(chosen.value, 10) : null
+        };
+      });
+      return {
+        title: title, maxPt: maxPt, items: items, left: left,
+        rows: lastRows.slice(),
+        normSource: box.getAttribute("data-norm-source") || "",
+        key: (function () { var k = $(".scale-key", box); return k ? k.textContent.trim() : ""; })()
+      };
+    });
+
+    box.addEventListener("change", render);
+    render();
+  });
+
+  /* ---------- 4. AI evaluation (Friction Move frame) ---------- */
+  $$(".frict").forEach(function (box) {
+    $$(".step", box).forEach(function (step) {
+      var ta = $("textarea", step);
+      if (ta) ta.addEventListener("input", function () {
+        step.classList.toggle("done", ta.value.trim().length > 8);
+      });
+    });
+    $$(".verdictrow", box).forEach(function (row) {
+      $$(".vbtn", row).forEach(function (b) {
+        b.setAttribute("aria-pressed", "false");
+        b.addEventListener("click", function () {
+          $$(".vbtn", row).forEach(function (o) { o.setAttribute("aria-pressed", "false"); });
+          b.setAttribute("aria-pressed", "true");
+          var step = b.closest(".step");
+          if (step) step.classList.add("done");
+        });
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
