@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Paths You Could See</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    textarea { resize: vertical; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid #5D1725;
+      outline-offset: 2px;
+    }
+
+    /* Touch: keyed to the pointer, not the viewport, so a tablet in landscape
+       gets the larger targets too. */
+    @media (pointer: coarse) {
+      button, .touch-target { min-height: 2.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* A textarea prints only its visible box, so anything scrolled past is
+       silently clipped. Every field keeps a hidden twin div, filled on every
+       keystroke. Divs paginate; textareas do not. */
+    .print-mirror { display: none; }
+
+    @media print {
+      body { background-color: white !important; margin: 0; padding: 0; font-size: 11pt; }
+      .no-print { display: none !important; }
+      .print-box { border: 1px solid #ccc; padding: 10px; margin-bottom: 12px; }
+      #studentInfo, #completeness { break-inside: avoid; }
+      textarea, input { display: none !important; }
+      .print-mirror {
+        display: block !important;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 10.5pt; line-height: 1.45; color: #000; margin-top: 2px;
+      }
+      .print-mirror.is-input { border-bottom: 1px solid #bbb; min-height: 1.3em; padding-bottom: 1px; }
+      .print-mirror:empty::before { content: "—"; color: #999; }
+      header { border-bottom: 2px solid black; margin-bottom: 20px; }
+      .page-break { page-break-before: always; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans p-4 md:p-8">
+
+  <div class="max-w-4xl mx-auto bg-white p-5 md:p-8 rounded-xl shadow-lg border-t-8 border-[#5D1725]">
+
+    <header class="flex justify-between items-end mb-6 pb-4 border-b border-gray-200 gap-4 flex-wrap">
+      <div>
+        <p class="text-xs font-bold text-[#5D1725] uppercase tracking-widest mb-1">EPY 3143 · Week 4 · Session B</p>
+        <h1 class="text-2xl md:text-3xl font-black text-[#5D1725]">The Paths You Could See</h1>
+        <p class="text-gray-600 font-medium text-sm mt-1">Identity status, personality, and the opportunity structure you were standing in</p>
+      </div>
+      <div class="no-print flex flex-col items-end gap-2">
+        <div class="flex gap-2 flex-wrap justify-end">
+          <button onclick="copyText()"
+            class="bg-white border-2 border-[#5D1725] text-[#5D1725] hover:bg-rose-50 font-bold py-2 px-4 rounded shadow-sm transition">
+            Copy my text
+          </button>
+          <button onclick="window.print()"
+            class="bg-[#5D1725] hover:bg-[#3D0A14] text-white font-bold py-2 px-4 rounded shadow transition">
+            Save &amp; Download PDF
+          </button>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="saveStatus" role="status" aria-live="polite" class="text-xs text-green-700 font-semibold hidden">✓ Saved</span>
+          <button onclick="downloadText()" class="text-xs text-gray-500 hover:text-[#5D1725] transition underline inline-block py-1 px-1 min-h-[24px]">Download as .txt</button>
+          <button onclick="clearAll()" class="text-xs text-gray-600 hover:text-red-600 transition underline inline-block py-1 px-1 min-h-[24px]">Clear my work</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="studentInfo" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 print-box">
+      <div>
+        <label for="studentName" class="block text-xs font-bold text-gray-700 uppercase mb-1">Name</label>
+        <input type="text" id="studentName" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Your full name">
+      </div>
+      <div>
+        <label for="gradeSubject" class="block text-xs font-bold text-gray-700 uppercase mb-1">What you plan to teach / your field</label>
+        <input type="text" id="gradeSubject" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., HS Biology, K-5, School Counseling">
+      </div>
+      <div>
+        <label for="sessionDate" class="block text-xs font-bold text-gray-700 uppercase mb-1">Date</label>
+        <input type="date" id="sessionDate" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none">
+      </div>
+    </div>
+
+    <div id="completeness" role="group" aria-labelledby="completeLabel" class="mb-6 rounded-xl border p-4">
+      <div class="flex items-baseline justify-between gap-4 flex-wrap">
+        <p class="text-xs font-black uppercase tracking-widest" id="completeLabel">Completeness</p>
+        <p id="completeCount" class="text-sm font-black"></p>
+      </div>
+      <p id="completeMissing" class="mt-2 text-sm leading-relaxed"></p>
+      <p id="completeCounts" class="mt-2 text-xs font-mono text-gray-600 leading-relaxed"></p>
+      <p id="completeAnnounce" class="sr-only" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
+      <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
+      <p class="text-sm text-amber-900 mb-3">
+        This one is about you, which makes it different from the others. Marcia's framework
+        is a <strong>lens, not a verdict</strong> — the brief says foreclosure and achievement
+        look identical in a single conversation, and that applies to you too. Nothing here asks
+        you to label yourself.
+      </p>
+      <p class="text-sm text-amber-900 mb-3">
+        <strong>You decide the level of detail.</strong> Part 2 asks what was and wasn't
+        available to you growing up. You can answer that structurally — what a person in that
+        situation could see — without disclosing anything about your family you'd rather not
+        put in writing. A general answer, honestly given, is worth full credit.
+      </p>
+      <p class="text-xs text-amber-800 pt-3 border-t border-amber-200" id="pasteRule">
+        <strong>Only Part 3's AI box accepts pasted text.</strong> Everything else is your own
+        reasoning and has to be typed. If you drafted somewhere else for an access reason,
+        tell Dr. Parra-Martinez and he will take it that way.
+      </p>
+    </div>
+
+    <!-- PART 0 -->
+    <section class="mb-8 print-box">
+      <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3 mb-4">How you got here</h2>
+      <div class="space-y-4">
+        <div>
+          <label for="pathWhen" class="block text-sm font-bold text-gray-700 mb-1">When did you first think seriously about this field?</label>
+          <textarea rows="2" id="pathWhen" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-2 rounded bg-gray-50 focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="An age, a year, or a moment."></textarea>
+        </div>
+        <div>
+          <label for="pathWho" class="block text-sm font-bold text-gray-700 mb-1">Who or what was in the room when that happened?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">A teacher, a parent, a job, a class, a shortage of alternatives. All of these are real answers.</p>
+          <textarea rows="3" id="pathWho" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-2 rounded bg-gray-50 focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 1 -->
+    <section class="mb-8 print-box">
+      <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 1 — Marcia's two questions</h2>
+        <span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">2 pts</span>
+      </div>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Evidence, not labels. Do not name a status.</p>
+
+      <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
+        <div>
+          <label for="commitment" class="block text-sm font-bold text-gray-800 mb-1"><strong>Commitment.</strong> What are you committed to — and what would it actually cost you to change course now?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Cost in time, money, family expectation, sunk credits, how it would be received. Be concrete.</p>
+          <textarea rows="4" id="commitment" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+        <div>
+          <label for="exploration" class="block text-sm font-bold text-gray-800 mb-1"><strong>Exploration.</strong> Name a path you seriously considered and set down. What made you set it down?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Exploration leaves a trail of positions you used to hold. <strong>If you cannot name one, write that plainly.</strong> It is information, not a failure — and Part 2 is where it gets interesting.</p>
+          <textarea rows="4" id="exploration" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 2 -->
+    <section class="mb-8 print-box">
+      <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 2 — What was actually in the room</h2>
+        <span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">2 pts</span>
+      </div>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">
+        Exploration requires something to explore. Before anyone calls a commitment premature,
+        it is worth asking what the alternatives were.
+      </p>
+
+      <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
+        <div>
+          <label for="knownJobs" class="block text-sm font-bold text-gray-800 mb-1">List the jobs you could have named at fifteen <em>because you had watched somebody do them.</em></label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Not jobs you'd heard of — jobs you had actually seen done, by someone you knew. Most people's list is shorter than they expect.</p>
+          <textarea rows="4" id="knownJobs" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+        <div>
+          <label for="neverInRoom" class="block text-sm font-bold text-gray-800 mb-1">Name one path that was never in the room. <em>Not one you rejected — one you never saw.</em></label>
+          <p class="text-xs text-gray-500 mb-2 no-print">And: what would have had to be true for it to be visible to you at fifteen?</p>
+          <textarea rows="4" id="neverInRoom" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 3 -->
+    <section class="mb-8 print-box page-break">
+      <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 3 — Predict → Verify</h2>
+        <span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">2 pts</span>
+      </div>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Does an AI widen what you can see, or hand you back the middle of the distribution?</p>
+
+      <div class="bg-gray-50 p-5 border border-gray-300 rounded-lg space-y-5">
+        <div>
+          <label for="aiPredict" class="block text-sm font-bold text-gray-800 mb-1"><strong>Predict first.</strong> Before you prompt: what will it suggest?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Write your prediction now. The activity does not work backwards, and an honest "I skipped this" is worth more than a reconstructed guess.</p>
+          <textarea rows="3" id="aiPredict" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg border border-gray-200">
+          <p class="text-xs font-bold text-gray-500 uppercase mb-2">Prompt 1 — fill in your own three blanks</p>
+          <p class="text-sm font-mono text-gray-800 leading-relaxed mb-4">"I'm a college student. I like ______, I'm good at ______, and people tell me I'm ______. What careers should I consider?"</p>
+          <p class="text-xs font-bold text-gray-500 uppercase mb-2">Prompt 2 — same conversation, straight after</p>
+          <p class="text-sm font-mono text-gray-800 leading-relaxed">"Now give me ten more that almost nobody would suggest to someone with that description, and say why each one is usually overlooked."</p>
+        </div>
+
+        <div>
+          <label for="aiOutput" class="block text-sm font-bold text-gray-800 mb-1">Paste both responses here:</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">This is the one field that <em>should</em> be pasted.</p>
+          <textarea rows="8" id="aiOutput" class="w-full border border-gray-300 p-3 rounded font-mono text-sm focus:ring-2 focus:ring-[#5D1725] focus:outline-none bg-white" placeholder="[Paste both AI responses]"></textarea>
+        </div>
+
+        <div>
+          <label for="aiCompare" class="block text-sm font-bold text-gray-800 mb-2">Compare the <strong>first</strong> list against your Part 2 list, and the <strong>second</strong> list against the first.</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Did the first list widen what you could see, or restate it? Did it take an explicit request to get anything unusual — and when it did, was the unusual list any good, or just rarer words?</p>
+          <textarea rows="5" id="aiCompare" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Quote at least one specific suggestion as evidence."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 4 -->
+    <section class="mb-8 print-box">
+      <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
+        <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 4 — You are about to be someone's only example</h2>
+        <span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">2 pts</span>
+      </div>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">
+        For some student in your future classroom, you will be the only person they have ever
+        watched do a job that requires what your subject requires. That makes you part of their
+        opportunity structure whether you intend it or not.
+      </p>
+
+      <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
+        <div>
+          <label for="designMove" class="block text-sm font-bold text-gray-800 mb-1">Name <strong>one concrete move</strong> in your subject that widens what a student can see.</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Not "expose them to more careers." Something you could do in a specific lesson, in a specific week, that puts a path in the room that was not there before.</p>
+          <textarea rows="5" id="designMove" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+        <div>
+          <label for="designCost" class="block text-sm font-bold text-gray-800 mb-1">What does it cost — and what are you giving up to do it?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Minutes, coverage, a thing you would otherwise have taught. Advice with no cost attached is free to give and free to ignore.</p>
+          <textarea rows="4" id="designCost" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 5 -->
+    <section class="print-box mb-4">
+      <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 5 — Peer review</h2>
+        <span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">2 pts</span>
+      </div>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">
+        Read a classmate's Part 4 <strong>as a fifteen-year-old who has never met anyone who does that job.</strong>
+        Would their move have reached you?
+      </p>
+
+      <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="classmateName" class="block text-xs font-bold text-gray-700 uppercase mb-1">Classmate's name</label>
+            <input type="text" id="classmateName" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Classmate's name">
+          </div>
+          <div>
+            <label for="classmateContext" class="block text-xs font-bold text-gray-700 uppercase mb-1">Their subject / field</label>
+            <input type="text" id="classmateContext" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., HS Chemistry">
+          </div>
+        </div>
+        <div>
+          <label for="peerFeedback" class="block text-sm font-bold text-gray-800 mb-1">From that fifteen-year-old's side: what would you have needed that their move does not yet give you?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Use one idea from this week — Marcia, a Big Five trait, or the opportunity-structure argument.</p>
+          <textarea rows="5" id="peerFeedback" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="text-center mt-6 no-print">
+    <p class="text-xs text-gray-600 max-w-2xl mx-auto">
+      Your responses save in this browser only — they will not follow you to another device.
+      Use <strong>Copy my text</strong> to submit in Canvas, or <strong>Save &amp; Download PDF</strong> for a printed copy.
+    </p>
+  </div>
+
+  <div id="copyModal" role="dialog" aria-modal="true" aria-labelledby="copyModalTitle"
+       class="no-print hidden fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6 border-t-8 border-[#5D1725]">
+      <h3 id="copyModalTitle" class="text-lg font-black text-[#5D1725] mb-1">Copy your work</h3>
+      <p class="text-sm text-gray-600 mb-3">Your browser blocked automatic copying. The text below is selected — press <strong>Cmd&nbsp;+&nbsp;C</strong> (Mac) or <strong>Ctrl&nbsp;+&nbsp;C</strong> (Windows).</p>
+      <textarea id="copyModalText" rows="12" aria-label="Your workshop text, ready to copy" class="w-full border border-gray-300 p-3 rounded font-mono text-xs bg-gray-50"></textarea>
+      <div class="flex justify-end mt-4">
+        <button onclick="closeCopyModal()" class="bg-[#5D1725] hover:bg-[#3D0A14] text-white font-bold py-2 px-5 rounded transition">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FIELDS = [
+      ['studentName',     'Name'],
+      ['gradeSubject',    'Field'],
+      ['sessionDate',     'Date'],
+      ['pathWhen',        'When you first thought of it'],
+      ['pathWho',         'Who was in the room'],
+      ['commitment',      'Part 1 · Commitment and its cost'],
+      ['exploration',     'Part 1 · A path set down'],
+      ['knownJobs',       'Part 2 · Jobs you had watched someone do'],
+      ['neverInRoom',     'Part 2 · A path never in the room'],
+      ['aiPredict',       'Part 3 · Your prediction'],
+      ['aiOutput',        'Part 3 · AI responses'],
+      ['aiCompare',       'Part 3 · Your comparison'],
+      ['designMove',      'Part 4 · Your move'],
+      ['designCost',      'Part 4 · What it costs'],
+      ['classmateName',   'Part 5 · Classmate'],
+      ['classmateContext','Part 5 · Their field'],
+      ['peerFeedback',    'Part 5 · Your feedback']
+    ];
+    const WORDY = [
+      ['commitment','Commit'], ['exploration','Explore'], ['knownJobs','Watched'],
+      ['neverInRoom','Unseen'], ['aiPredict','Predict'], ['aiOutput','AI'],
+      ['aiCompare','Compare'], ['designMove','Move'], ['designCost','Cost'],
+      ['peerFeedback','Peer']
+    ];
+    const STORAGE_KEY = 'epy3143_wk04_workbench_v1';
+    const ids = FIELDS.map(f => f[0]);
+    const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    const words = s => s.trim() ? s.trim().split(/\s+/).length : 0;
+
+    function buildMirrors() {
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const m = document.createElement('div');
+        m.className = 'print-mirror' + (el.tagName === 'INPUT' ? ' is-input' : '');
+        m.setAttribute('data-mirror-for', id);
+        el.insertAdjacentElement('afterend', m);
+      });
+    }
+    function updateMirrors() {
+      ids.forEach(id => {
+        const m = document.querySelector('[data-mirror-for="' + id + '"]');
+        if (m) m.textContent = val(id);
+      });
+    }
+
+    function updateStamp() {
+      const missing = FIELDS.filter(([id]) => !val(id)).map(([, l]) => l);
+      const done = FIELDS.length - missing.length;
+      const complete = missing.length === 0;
+      const box = document.getElementById('completeness');
+      box.className = 'mb-6 rounded-xl border p-4 ' + (complete ? 'bg-green-50 border-green-300' : 'bg-amber-50 border-amber-300');
+      document.getElementById('completeLabel').className = 'text-xs font-black uppercase tracking-widest ' + (complete ? 'text-green-800' : 'text-amber-800');
+      const count = document.getElementById('completeCount');
+      count.className = 'text-sm font-black ' + (complete ? 'text-green-800' : 'text-amber-900');
+      count.textContent = done + ' of ' + FIELDS.length + ' fields';
+      const miss = document.getElementById('completeMissing');
+      miss.className = 'mt-2 text-sm leading-relaxed ' + (complete ? 'text-green-900' : 'text-amber-900');
+      // A wall of amber before the student has typed anything is noise, not help.
+      const MISSING_SHOWN = 6;
+      const shown = missing.slice(0, MISSING_SHOWN).join(' · ');
+      const extra = missing.length - MISSING_SHOWN;
+      miss.textContent = complete
+        ? 'Everything is filled in. Ready to submit.'
+        : (done === 0
+            ? 'Nothing filled in yet. This box will show what is left as you go.'
+            : 'Still empty — ' + shown + (extra > 0 ? ' · and ' + extra + ' more' : ''));
+      document.getElementById('completeCounts').textContent =
+        WORDY.map(([id, l]) => l + ' ' + words(val(id)) + 'w').join('  ·  ');
+      const ann = document.getElementById('completeAnnounce');
+      if (ann && updateStamp._last !== done) {
+        updateStamp._last = done;
+        ann.textContent = complete ? 'All ' + FIELDS.length + ' fields complete.'
+                                   : done + ' of ' + FIELDS.length + ' fields complete.';
+      }
+    }
+
+    function buildText() {
+      const L = [], rule = '------------------------------------------------------------';
+      L.push('EPY 3143 - Week 4 - The Paths You Could See'); L.push(rule);
+      L.push('Name:  ' + (val('studentName') || '(blank)'));
+      L.push('Field: ' + (val('gradeSubject') || '(blank)'));
+      L.push('Date:  ' + (val('sessionDate') || '(blank)'));
+      const block = (head, items) => {
+        L.push(''); L.push(head);
+        items.forEach(([q, id]) => { L.push(q); L.push(val(id) || '(blank)'); L.push(''); });
+      };
+      block('HOW I GOT HERE', [['When I first thought seriously about this field:','pathWhen'],
+                               ['Who or what was in the room:','pathWho']]);
+      block('PART 1 - MARCIA\'S TWO QUESTIONS', [['Commitment, and what changing course would cost:','commitment'],
+                               ['A path I seriously considered and set down:','exploration']]);
+      block('PART 2 - WHAT WAS ACTUALLY IN THE ROOM', [['Jobs I could name at fifteen because I had watched someone do them:','knownJobs'],
+                               ['A path that was never in the room:','neverInRoom']]);
+      block('PART 3 - PREDICT / VERIFY', [['My prediction, written before prompting:','aiPredict'],
+                               ['What the AI produced (both prompts):','aiOutput'],
+                               ['My comparison:','aiCompare']]);
+      block('PART 4 - ONE MOVE THAT WIDENS WHAT A STUDENT CAN SEE', [['The move:','designMove'],
+                               ['What it costs:','designCost']]);
+      L.push('PART 5 - PEER REVIEW');
+      L.push('Classmate: ' + (val('classmateName') || '(blank)'));
+      L.push('Their field: ' + (val('classmateContext') || '(blank)'));
+      L.push(val('peerFeedback') || '(blank)');
+      L.push(''); L.push(rule);
+      const missing = FIELDS.filter(([id]) => !val(id)).length;
+      L.push('Completeness: ' + (FIELDS.length - missing) + ' of ' + FIELDS.length + ' fields'
+             + (missing ? ' - ' + missing + ' still empty' : ' - complete'));
+      L.push(WORDY.map(([id, l]) => l + ' ' + words(val(id)) + 'w').join(' · '));
+      return L.join('\n');
+    }
+
+    function flashSaved(msg) {
+      const s = document.getElementById('saveStatus');
+      if (!s) return;
+      s.textContent = msg; s.classList.remove('hidden');
+      clearTimeout(s._t); s._t = setTimeout(() => s.classList.add('hidden'), 2500);
+    }
+    function copyText() {
+      const text = buildText();
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => flashSaved('✓ Copied')).catch(() => openCopyModal(text));
+      } else { openCopyModal(text); }
+    }
+    let copyModalOpener = null;
+    function openCopyModal(text) {
+      const m = document.getElementById('copyModal'), t = document.getElementById('copyModalText');
+      copyModalOpener = document.activeElement;
+      t.value = text; m.classList.remove('hidden'); m.classList.add('flex'); t.focus(); t.select();
+    }
+    function closeCopyModal() {
+      const m = document.getElementById('copyModal');
+      if (m.classList.contains('hidden')) return;
+      m.classList.add('hidden'); m.classList.remove('flex');
+      if (copyModalOpener && copyModalOpener.focus) copyModalOpener.focus();
+      copyModalOpener = null;
+    }
+    function downloadText() {
+      const name = (val('studentName') || 'workshop').replace(/[^\w\-]+/g, '_');
+      const blob = new Blob([buildText()], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'EPY3143_Wk04_' + name + '.txt';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+
+    function guardPaste() {
+      document.querySelectorAll('[data-nopaste]').forEach(el => {
+        const warn = document.createElement('p');
+        warn.setAttribute('role', 'alert');
+        warn.className = 'no-print mt-2 text-xs font-semibold text-[#5D1725] bg-rose-100 border border-rose-300 rounded px-3 py-2 hidden';
+        warn.textContent = 'This part is yours — type it. Pasted text belongs in Part 3 (the AI responses). If you drafted elsewhere for an access reason, tell Dr. Parra-Martinez and he will take it that way.';
+        el.insertAdjacentElement('afterend', warn);
+        const block = e => {
+          e.preventDefault();
+          warn.classList.remove('hidden');
+          clearTimeout(warn._t);
+          warn._t = setTimeout(() => warn.classList.add('hidden'), 8000);
+        };
+        el.addEventListener('paste', block);
+        el.addEventListener('drop', block);
+      });
+    }
+
+    function saveAll() {
+      const data = {};
+      ids.forEach(id => { const el = document.getElementById(id); if (el) data[id] = el.value; });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      flashSaved('✓ Saved');
+    }
+    function restoreAll() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        ids.forEach(id => { const el = document.getElementById(id); if (el && data[id] !== undefined) el.value = data[id]; });
+      } catch (e) { /* corrupted storage - ignore */ }
+    }
+    function clearAll() {
+      if (!confirm('Clear all your responses? This cannot be undone.')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      refresh();
+    }
+    function refresh() { updateMirrors(); updateStamp(); }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      buildMirrors(); guardPaste(); restoreAll();
+      const d = document.getElementById('sessionDate');
+      if (d && !d.value) {
+        const n = new Date(), pad = x => String(x).padStart(2, '0');
+        d.value = n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate());
+      }
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => { saveAll(); refresh(); });
+      });
+      document.getElementById('copyModal').addEventListener('click', e => { if (e.target.id === 'copyModal') closeCopyModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCopyModal(); });
+      window.addEventListener('beforeprint', refresh);
+      refresh();
+    });
+  </script>
+
+</body>
+</html>
