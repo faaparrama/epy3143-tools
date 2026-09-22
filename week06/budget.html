@@ -113,9 +113,6 @@
     <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
       <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
       <p class="text-sm text-amber-900 mb-3">A four-line card for one concept you teach: what's hard, what to cut, what the learner does, and a number. Wrong is fine here. Vague is not.</p>
-      <p class="text-xs text-amber-800 pt-3 border-t border-amber-200" id="pasteRule">
-        <strong>Only Part 6 accepts pasted text.</strong> Everything else is your own reasoning and has to be typed. If you drafted somewhere else for an access reason, tell Dr. Parra-Martinez and he will take it that way.
-      </p>
     </div>
 
     <!-- BEFORE YOU WRITE A LINE -->
@@ -123,74 +120,71 @@
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
         <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Before you write a line</h2>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Answer these three before you draft the card.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Answer these before you draft the card.</p>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
-          <label for="concept" class="block text-sm font-bold text-gray-800 mb-1">The concept</label>
-          <input type="text" id="concept" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., photosynthesis · long division · the subjunctive · supply and demand">
+          <label for="concept" class="block text-sm font-bold text-gray-800 mb-1">The concept you want to teach</label>
+          <input type="text" id="concept" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., photosynthesis · long division · the subjunctive · supply and demand">
         </div>
         <div>
-          <label for="learner" class="block text-sm font-bold text-gray-800 mb-1">Who is the learner?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Use your M1 population, or one Starkville student.</p>
-          <textarea rows="2" id="learner" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="learner" class="block text-sm font-bold text-gray-800 mb-1">Who are your milestone students?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">The population you defined for your own milestone.</p>
+          <textarea rows="2" id="learner" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="warehouse" class="block text-sm font-bold text-gray-800 mb-1">What must they already have for this to be <em>one chunk instead of eight</em>?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Name it specifically — the words, the procedure, or the prior concept it depends on.</p>
-          <textarea rows="3" id="warehouse" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="warehouse" class="block text-sm font-bold text-gray-800 mb-1">What do you expect them to know or remember before the new concept?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Name it specifically — a word, a procedure, or a prior concept.</p>
+          <textarea rows="3" id="warehouse" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
           <label for="strategy" class="block text-sm font-bold text-gray-800 mb-1">Which strategy is doing the germane work, and why that one?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Pick one: retrieval practice, spacing, interleaving, self-explanation, or dual coding.</p>
-          <textarea rows="3" id="strategy" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="3" id="strategy" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
 
-    <!-- PART 1 — INTRINSIC -->
+    <!-- PART 1 — INTRINSIC LOAD -->
     <section class="mb-8 print-box" id="part-1">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 1 — Intrinsic</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 1 — Intrinsic load</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">What makes this hard <em>in itself</em>?</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
           <label for="intrinsic" class="block text-sm font-bold text-gray-800 mb-1">How many parts must be held at once, and in what order?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">"Simplify" is not an answer — say what you cut.</p>
-          <textarea rows="4" id="intrinsic" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="4" id="intrinsic" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
 
-    <!-- PART 2 — EXTRANEOUS -->
+    <!-- PART 2 — EXTRANEOUS LOAD -->
     <section class="mb-8 print-box" id="part-2">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 2 — Extraneous</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 2 — Extraneous load</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">What will you strip out — including the tool's output?</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="extraneous" class="block text-sm font-bold text-gray-800 mb-1">Name what goes, and where it came from.</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Is it clutter on the learner's desk, or clutter for your own convenience?</p>
-          <textarea rows="4" id="extraneous" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="extraneous" class="block text-sm font-bold text-gray-800 mb-1">What will you strip out, and where did it come from?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Include the tool's output, not just the room or the slide — is it clutter on the learner's desk, or clutter for your own convenience?</p>
+          <textarea rows="4" id="extraneous" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
 
-    <!-- PART 3 — GERMANE -->
+    <!-- PART 3 — GERMANE LOAD -->
     <section class="mb-8 print-box" id="part-3">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 3 — Germane</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 3 — Germane load</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">What will the learner <strong>do</strong> with it?</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="germane" class="block text-sm font-bold text-gray-800 mb-1">The thing the learner does, and what it builds.</label>
+          <label for="germane" class="block text-sm font-bold text-gray-800 mb-1">What will the learner <strong>do</strong> with it, and what does that build?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">A picture on a slide is extraneous unless they build or read a structure with it.</p>
-          <textarea rows="4" id="germane" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="4" id="germane" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
@@ -205,12 +199,12 @@
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
           <label for="limitNumber" class="block text-sm font-bold text-gray-800 mb-1">The limit, as a number with its unit</label>
-          <input type="text" id="limitNumber" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., 3 steps per explanation · 4 items per chunk · 60 words per turn">
+          <input type="text" id="limitNumber" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., 3 steps per explanation · 4 items per chunk · 60 words per turn">
         </div>
         <div>
           <label for="limitWhy" class="block text-sm font-bold text-gray-800 mb-1">Why that number, for these learners?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">"Three steps because there are three steps" is not a reason. A reason names the learner.</p>
-          <textarea rows="3" id="limitWhy" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="3" id="limitWhy" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
@@ -225,17 +219,17 @@
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
           <label for="auditOf" class="block text-sm font-bold text-gray-800 mb-1">Whose card you audited</label>
-          <input type="text" id="auditOf" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Name(s) and their concept">
+          <input type="text" id="auditOf" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Name(s) and their concept">
         </div>
         <div>
           <label for="auditNotes" class="block text-sm font-bold text-gray-800 mb-1">Your audit</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Could a tool follow this? Whose desk is the extraneous line about? Would the limit survive "just explain the whole thing"?</p>
-          <textarea rows="5" id="auditNotes" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="5" id="auditNotes" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
           <label for="revision" class="block text-sm font-bold text-gray-800 mb-1">What you changed after the audit</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Name the line. "Nothing" needs a reason.</p>
-          <textarea rows="3" id="revision" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="3" id="revision" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
@@ -255,7 +249,7 @@
         <div>
           <label for="mnemonicHold" class="block text-sm font-bold text-gray-800 mb-1">Which answer belongs in your tool — and which is your <strong>off-limits</strong> line?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Some concepts need the list held first. Say which yours is.</p>
-          <textarea rows="3" id="mnemonicHold" data-nopaste aria-describedby="pasteRule" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="3" id="mnemonicHold" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
@@ -299,7 +293,7 @@
       ],
       [
             "learner",
-            "Before you write a line · Learner"
+            "Before you write a line · Milestone students"
       ],
       [
             "warehouse",
@@ -311,15 +305,15 @@
       ],
       [
             "intrinsic",
-            "Part 1 — Intrinsic · Intrinsic line"
+            "Part 1 — Intrinsic load · Intrinsic line"
       ],
       [
             "extraneous",
-            "Part 2 — Extraneous · Extraneous line"
+            "Part 2 — Extraneous load · Extraneous line"
       ],
       [
             "germane",
-            "Part 3 — Germane · Germane line"
+            "Part 3 — Germane load · Germane line"
       ],
       [
             "limitNumber",
@@ -357,15 +351,15 @@
             "BEFORE YOU WRITE A LINE",
             [
                   [
-                        "The concept",
+                        "The concept you want to teach",
                         "concept"
                   ],
                   [
-                        "Who is the learner?",
+                        "Who are your milestone students?",
                         "learner"
                   ],
                   [
-                        "What must they already have for this to be one chunk instead of eight?",
+                        "What do you expect them to know or remember before the new concept?",
                         "warehouse"
                   ],
                   [
@@ -376,7 +370,7 @@
             ""
       ],
       [
-            "PART 1 — INTRINSIC",
+            "PART 1 — INTRINSIC LOAD",
             [
                   [
                         "How many parts must be held at once, and in what order?",
@@ -386,20 +380,20 @@
             ""
       ],
       [
-            "PART 2 — EXTRANEOUS",
+            "PART 2 — EXTRANEOUS LOAD",
             [
                   [
-                        "Name what goes, and where it came from.",
+                        "What will you strip out, and where did it come from?",
                         "extraneous"
                   ]
             ],
             ""
       ],
       [
-            "PART 3 — GERMANE",
+            "PART 3 — GERMANE LOAD",
             [
                   [
-                        "The thing the learner does, and what it builds.",
+                        "What will the learner do with it, and what does that build?",
                         "germane"
                   ]
             ],
