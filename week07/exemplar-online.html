@@ -24,6 +24,10 @@
       button, .touch-target { min-height: 2.75rem; }
     }
 
+    .choice-opt { cursor: pointer; }
+    .choice-opt:has(input:checked) { background: #5D1725; border-color: #5D1725; color: #fff; }
+    .choice-opt:has(input:focus-visible) { outline: 3px solid #5D1725; outline-offset: 2px; }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -84,6 +88,8 @@
         </div>
       </div>
     </header>
+
+    <p id="lockStamp" class="hidden text-xs text-gray-600 mb-3"></p>
 
     <div id="studentInfo" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 print-box">
       <div>
@@ -218,6 +224,7 @@
       or <strong>Save &amp; Download PDF</strong> to submit on Canvas. Clearing your browser data clears this page.
     </footer>
   </div>
+
 
   <div id="copyModal" role="dialog" aria-modal="true" aria-labelledby="copyModalTitle"
        class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
@@ -364,6 +371,43 @@
       ]
 ];
     const STORAGE_KEY = 'epy3143_wk07_workbench_v1_online';
+    const LOCK_HASH = null;
+    const LOCK_KEY = STORAGE_KEY + '_unlocked';
+    function codeHash(code) {
+      const norm = 'epy3143:' + code.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const bytes = new TextEncoder().encode(norm);
+      let h = 0x811c9dc5;
+      for (const b of bytes) { h ^= b; h = Math.imul(h, 0x01000193) >>> 0; }
+      return h >>> 0;
+    }
+    function unlockedAt() { try { return localStorage.getItem(LOCK_KEY) || ''; } catch (e) { return ''; } }
+    function showStamp() {
+      const t = unlockedAt(), s = document.getElementById('lockStamp');
+      if (!LOCK_HASH || !t || !s) return;
+      s.textContent = 'Class code entered ' + t + '.';
+      s.classList.remove('hidden');
+    }
+    function setupLock() {
+      const screen = document.getElementById('lockScreen');
+      if (!LOCK_HASH || !screen) return;
+      const main = document.querySelector('body > div.max-w-4xl');
+      if (unlockedAt()) { screen.remove(); showStamp(); return; }
+      main.inert = true; main.setAttribute('aria-hidden', 'true');
+      const input = document.getElementById('lockInput');
+      input.focus();
+      document.getElementById('lockForm').addEventListener('submit', e => {
+        e.preventDefault();
+        if (codeHash(input.value) !== LOCK_HASH) {
+          document.getElementById('lockMsg').textContent = 'That is not the code. Check with the room.';
+          return;
+        }
+        const n = new Date(), pad = x => String(x).padStart(2, '0');
+        const t = n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate()) + ' ' + pad(n.getHours()) + ':' + pad(n.getMinutes());
+        try { localStorage.setItem(LOCK_KEY, t); } catch (err) {}
+        main.inert = false; main.removeAttribute('aria-hidden');
+        screen.remove(); showStamp();
+      });
+    }
     const REQUIRED = FIELDS.filter(([id]) => !OPTIONAL.has(id));
     const ids = FIELDS.map(f => f[0]);
     const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
@@ -430,6 +474,7 @@
       L.push('Name:  ' + (val('studentName') || '(blank)'));
       L.push('Field: ' + (val('gradeSubject') || '(blank)'));
       L.push('Date:  ' + (val('sessionDate') || '(blank)'));
+      if (LOCK_HASH) L.push('Class code entered: ' + (unlockedAt() || '(not entered)'));
       BLOCKS.forEach(b => blockText(L, b));
       L.push(RULE);
       const missing = REQUIRED.filter(([id]) => !val(id)).length;
@@ -516,11 +561,36 @@
       if (!confirm('Clear all your responses? This cannot be undone.')) return;
       localStorage.removeItem(STORAGE_KEY);
       ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      document.querySelectorAll('.choice-why').forEach(w => w.classList.add('hidden'));
+      document.querySelectorAll('[id^="checkMsg-"]').forEach(m => { m.textContent = ''; });
       refresh();
     }
-    function refresh() { updateMirrors(); updateStamp(); }
+    function syncChoices() {
+      document.querySelectorAll('input[data-choice]').forEach(h => {
+        document.querySelectorAll('input[name="' + h.id + '"]').forEach(r => { r.checked = (r.value === h.value); });
+      });
+    }
+    function checkPart(i) {
+      const sec = document.getElementById('part-' + i);
+      const whys = sec.querySelectorAll('.choice-why');
+      const msg = document.getElementById('checkMsg-' + i);
+      const open = [...whys].filter(w => !val(w.dataset.whyFor)).length;
+      if (open) { msg.textContent = 'Sort all of them first — ' + open + ' still open.'; return; }
+      let same = 0;
+      whys.forEach(w => {
+        const mine = val(w.dataset.whyFor).split(' · ')[0];
+        const ok = mine === w.dataset.answer;
+        if (ok) same++;
+        if (!w.dataset.base) w.dataset.base = w.innerHTML;
+        w.innerHTML = '<strong>' + (ok ? 'Same as the key (' : 'The key says ') + w.dataset.answer + (ok ? ').' : ', you said ' + mine + '.') + '</strong> ' + w.dataset.base;
+        w.classList.remove('hidden');
+      });
+      msg.textContent = same + ' of ' + whys.length + ' match the key. Where yours differs, read the reason before you decide who is right.';
+    }
+    function refresh() { syncChoices(); updateMirrors(); updateStamp(); }
 
     document.addEventListener('DOMContentLoaded', () => {
+      setupLock();
       buildMirrors(); guardPaste(); restoreAll();
       const d = document.getElementById('sessionDate');
       if (d && !d.value) {
@@ -530,6 +600,10 @@
       ids.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', () => { saveAll(); refresh(); });
+      });
+      document.querySelectorAll('input[data-choice]').forEach(h => {
+        document.querySelectorAll('input[name="' + h.id + '"]').forEach(r =>
+          r.addEventListener('change', () => { h.value = r.value; saveAll(); refresh(); }));
       });
       document.getElementById('copyModal').addEventListener('click', e => { if (e.target.id === 'copyModal') closeCopyModal(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCopyModal(); });
