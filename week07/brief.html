@@ -2249,6 +2249,16 @@ padding:.45rem .7rem;margin-top:.5rem;background:var(--ground);border-radius:0 3
 .fb.right .verdict{color:var(--ok)}
 .fb.wrong .verdict{color:var(--no)}
 
+.tfrow{display:flex;gap:.5rem;margin:.1rem 0 .5rem;flex-wrap:wrap}
+.tf{font:inherit;font-size:.95rem;font-weight:600;min-width:7rem;padding:.45rem .9rem;
+text-align:center;background:var(--card);border:1px solid var(--rule-strong);
+border-radius:4px;cursor:pointer;color:inherit}
+.tf:hover{border-color:var(--maroon)}
+.tf:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.tf[aria-pressed="true"]{border-color:var(--maroon);background:var(--maroon-soft)}
+.tf.is-right{border-color:var(--ok);background:var(--ok-bg)}
+.tf.is-wrong{border-color:var(--no);background:var(--no-bg)}
+
 .commit textarea{width:100%;min-height:4.5rem;font:inherit;font-size:.95rem;
 padding:.5rem .65rem;border:1px solid var(--rule-strong);border-radius:4px;
 background:var(--ground);color:var(--ink);resize:vertical}
@@ -2312,7 +2322,30 @@ padding:.85rem 1rem;margin:1.6rem 0;font-size:.94rem}
 .carry .lbl{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
 text-transform:uppercase;color:var(--maroon);display:block;margin-bottom:.4rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-@media print{.cmp{break-inside:avoid}}
+
+.pastewarn{font-size:.82rem;font-weight:600;line-height:1.4;margin:.45rem 0 0;
+color:var(--no);background:var(--no-bg);
+border:1px solid var(--no);border-radius:4px;padding:.45rem .7rem}
+
+.savebar{display:flex;gap:.7rem;align-items:baseline;flex-wrap:wrap;
+margin:2.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule-strong)}
+.savepdf{font:inherit;font-size:.9rem;font-weight:600;padding:.5rem 1rem;
+background:var(--maroon);color:#fff;border:0;border-radius:4px;cursor:pointer}
+.savepdf:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.savenote{font-size:.82rem;color:var(--muted);flex:1 1 16rem}
+.ta-print{display:none}
+@media print{
+.cmp{break-inside:avoid}
+
+.savebar,.commit .go,.commit .hint,.opt,.tf,.pastewarn,.no-print{display:none}
+.commit textarea,.frict textarea{display:none}
+.ta-print{display:block;white-space:pre-wrap;font-size:.95rem;
+border-left:3px solid var(--maroon);padding:.4rem 0 .4rem .7rem;margin:.3rem 0}
+
+.commit .locked[hidden]{display:block!important}
+.fb[hidden]{display:none!important}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;color:#555}
+}
 
 .fb-band{
 border-left:3px solid var(--maroon); background:var(--maroon-soft);
@@ -2400,7 +2433,7 @@ body{overflow-x:hidden}
 
 <div class="brief-head">
 <p><span class="moment">Study · Week 7</span></p>
-<p>Read Chapter 8 first, then this. Last week was about how little the brain can hold. This week is about what it does with what gets in and why a learner can hold every fact correctly and still understand nothing.</p>
+<p>Read Chapter 8 of the textbook (Eggen &amp; Kauchak, 2025) first, then this. Last week was about how little the brain can hold. This week is about what it does with what gets in and why a learner can hold every fact correctly and still understand nothing.</p>
 <p><span class="time">About 13 minutes, including the two places you stop and write.</span></p>
 <p><span class="time">Pair this with <strong>the Walkthrough</strong>.</span></p>
 </div>
@@ -2446,13 +2479,13 @@ body{overflow-x:hidden}
 <p><span class="t">Practice is essential for long-term learning</span> <span class="note">Retrieval, spacing, generation — Week 6. <em>Cost:</em> practice of the wrong thing entrenches it.</span></p>
 </div>
 <div class="defn">
-<p><span class="t">Deep understanding requires meaningful learning</span> <span class="note">Ausubel’s word: <em>meaningful</em> means attached to structure; <em>rote</em> means attached to nothing. Both can produce a correct answer on Friday. Only one survives to March.</span></p>
+<p><span class="t">Deep understanding requires meaningful learning</span> <span class="note">Ausubel’s (1968) word: <em>meaningful</em> means attached to structure; <em>rote</em> means attached to nothing. Both can produce a correct answer on Friday. Only one survives to March.</span></p>
 </div>
 <div class="defn">
 <p><span class="t">Connecting to the real world enhances learning</span> <span class="note">More retrieval routes, more transfer. <em>Cost:</em> the real-world wrapper can hide the structure — Week 8’s whole case.</span></p>
 </div>
 <div class="defn">
-<p><span class="t">Interaction supports learning and conceptual change</span> <span class="note">Vygotsky’s argument, now with a mechanism: having to explain, defend or argue forces the schema out where it can be inspected. <em>Cost:</em> time, noise, and the teacher not being the one talking.</span></p>
+<p><span class="t">Interaction supports learning and conceptual change</span> <span class="note">Vygotsky’s (1978) argument, now with a mechanism: having to explain, defend or argue forces the schema out where it can be inspected. <em>Cost:</em> time, noise, and the teacher not being the one talking.</span></p>
 </div>
 <div class="defn">
 <p><span class="t">Explanation alone is insufficient</span> <span class="note"><strong>The one that matters most.</strong> A clear explanation is an input to construction, not a substitute for it. What the learner <em>does</em> after the explanation is where the learning is.</span></p>
@@ -2493,7 +2526,7 @@ body{overflow-x:hidden}
 <p><span class="t">Misinformation effect</span> <span class="note">Exposure to a wrong claim alters the stored knowledge, even when the source is later discredited. What was heard first is sticky.</span></p>
 </div>
 <div class="defn">
-<p><span class="t">Conceptual change</span> — the four conditions <span class="note">Posner and colleagues: the learner must be <strong>dissatisfied</strong> with the old idea; the new one must be <strong>intelligible</strong>, <strong>plausible</strong>, and <strong>fruitful</strong>. Notice that a clear explanation supplies only the second.</span></p>
+<p><span class="t">Conceptual change</span> — the four conditions <span class="note">Posner et al. (1982): the learner must be <strong>dissatisfied</strong> with the old idea; the new one must be <strong>intelligible</strong>, <strong>plausible</strong>, and <strong>fruitful</strong>. Notice that a clear explanation supplies only the second.</span></p>
 </div>
 <div class="keyline">
 <p>Explanation delivers <em>intelligible</em>. It cannot deliver <em>dissatisfied</em> — only an experience where the old idea visibly fails can do that. <strong>That is why interaction, prediction and argument are not enrichment. They are the mechanism.</strong></p>
@@ -2596,7 +2629,7 @@ body{overflow-x:hidden}
 <p><span class="verdict">Close, but they have no conception to be mis-</span> A misconception is a coherent wrong model. They have correct pieces and no model. That is worse in one way — there is nothing to be dissatisfied with — and easier in another.</p>
 </div>
 <div class="fb" data-for="c">
-<p><span class="verdict">Yes</span> Stored verbatim, retrievable by the matching cue, unusable when the cue is a celery stick. Ausubel’s rote; Whitehead’s inert. And multiple choice and memory tests reward this.</p>
+<p><span class="verdict">Yes</span> Stored verbatim, retrievable by the matching cue, unusable when the cue is a celery stick. Ausubel’s rote; Whitehead’s (1929) inert. And multiple choice and memory tests reward this.</p>
 </div>
 <div class="fb" data-for="d">
 <p><span class="verdict">The diagnosis that requires nothing of the teacher</span> She takes color-coded notes and came to ask about the grade. Whatever this is, it is not a lack of effort.</p>
@@ -2643,9 +2676,12 @@ body{overflow-x:hidden}
 <section id="sources" class="level2">
 <h2 class="anchored" data-anchor-id="sources">Sources</h2>
 <p>Ausubel, D. P. (1968). <em>Educational psychology: A cognitive view.</em> Holt, Rinehart and Winston.</p>
-<p>Vygotsky, L. S. (1978). <em>Mind in society: The development of higher psychological processes.</em> Harvard University Press.</p>
+<p>Eggen, P. D., &amp; Kauchak, D. P. (2025). <em>Using educational psychology in teaching</em> (12th ed.). Pearson. <strong>This week: Chapter 8.</strong></p>
 <p>OECD. (2026). <em>PISA 2025 results (Volume I).</em> OECD Publishing.</p>
+<p>Posner, G. J., Strike, K. A., Hewson, P. W., &amp; Gertzog, W. A. (1982). Accommodation of a scientific conception: Toward a theory of conceptual change. <em>Science Education, 66</em>(2), 211–227.</p>
 <p>Schraw, G., &amp; Dennison, R. S. (1994). Assessing metacognitive awareness. <em>Contemporary Educational Psychology, 19</em>(4), 460–475.</p>
+<p>Vygotsky, L. S. (1978). <em>Mind in society: The development of higher psychological processes.</em> Harvard University Press.</p>
+<p>Whitehead, A. N. (1929). <em>The aims of education and other essays.</em> Macmillan.</p>
 </section>
 
 </main>
@@ -3083,6 +3119,132 @@ body{overflow-x:hidden}
     box.addEventListener("change", render);
     render();
   });
+
+  /* ---------- 2b. True / false quick check -----------------------------
+     Authoring is deliberately lighter than .selfcheck: no hand-written
+     buttons. Write the statement, set data-answer to "true" or "false",
+     and supply one .fb per side. The two buttons are generated here, so a
+     brief can carry six of these without six blocks of HTML.
+     With JS off the statement and both rationales are still readable. */
+  $$(".truefalse").forEach(function (box) {
+    var right = (box.getAttribute("data-answer") || "").toLowerCase();
+    if (right !== "true" && right !== "false") return;
+    var fbs = {};
+    $$(".fb", box).forEach(function (f) {
+      fbs[(f.getAttribute("data-for") || "").toLowerCase()] = f;
+      f.hidden = true;
+    });
+
+    var row = document.createElement("div");
+    row.className = "tfrow";
+    ["true", "false"].forEach(function (val) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "tf";
+      b.setAttribute("data-tf", val);
+      b.setAttribute("aria-pressed", "false");
+      b.textContent = val === "true" ? "True" : "False";
+      row.appendChild(b);
+    });
+
+    /* after the statement, before the feedback */
+    var first = $(".fb", box);
+    if (first) box.insertBefore(row, first); else box.appendChild(row);
+
+    $$(".tf", row).forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var pick = btn.getAttribute("data-tf");
+        var ok = pick === right;
+        $$(".tf", row).forEach(function (b) {
+          b.setAttribute("aria-pressed", "false");
+          b.classList.remove("is-right", "is-wrong");
+        });
+        Object.keys(fbs).forEach(function (k) { fbs[k].hidden = true; });
+        btn.setAttribute("aria-pressed", "true");
+        btn.classList.add(ok ? "is-right" : "is-wrong");
+        if (fbs[pick]) {
+          fbs[pick].hidden = false;
+          fbs[pick].classList.add(ok ? "right" : "wrong");
+        }
+        /* never leave them looking at a wrong answer alone */
+        if (!ok) {
+          var r = $('.tf[data-tf="' + right + '"]', row);
+          if (r) r.classList.add("is-right");
+        }
+      });
+    });
+  });
+
+  /* ---------- 2b2. Paste guard ------------------------------------------
+     Same contract as the EPY 3143 workbench (shared/make_workbench.py,
+     guardPaste): paste and drop are blocked outright on the boxes where the
+     student is meant to think, and the only messaging is an in-the-moment
+     alert — no upfront policy paragraph, because the warning a student
+     actually gets is the one that teaches.
+
+     Every textarea in a brief component is guarded. Opt one out with
+     data-paste on the component or any ancestor — e.g. a box that is
+     *supposed* to receive a model's output. */
+  var GUARD_TEXT = "This part is yours — type it. If you drafted elsewhere for an " +
+    "access reason, tell Dr. Parra-Martinez and he will take it that way.";
+
+  $$(".cmp textarea, .frict textarea, .commit textarea").forEach(function (ta) {
+    if (ta._guarded) return;
+    ta._guarded = true;
+    var box = ta.closest("[data-paste]");
+    if (box) return;
+
+    var warn = document.createElement("p");
+    warn.setAttribute("role", "alert");
+    warn.className = "pastewarn no-print";
+    warn.textContent = GUARD_TEXT;
+    warn.hidden = true;
+    ta.insertAdjacentElement("afterend", warn);
+
+    var block = function (e) {
+      e.preventDefault();
+      warn.hidden = false;
+      clearTimeout(warn._t);
+      warn._t = setTimeout(function () { warn.hidden = true; }, 8000);
+    };
+    ta.addEventListener("paste", block);
+    ta.addEventListener("drop", block);
+  });
+
+  /* ---------- 2c. Save your work as PDF --------------------------------
+     Nothing on this page is submitted anywhere and nothing is stored, so a
+     student who closes the tab loses every answer they typed. Browsers do
+     not print the *current* value of a textarea reliably, so before the
+     print dialog opens each textarea's text is mirrored into a sibling
+     div that prints, and removed again afterwards. */
+  function mirrorTextareas() {
+    $$("textarea").forEach(function (ta) {
+      var m = document.createElement("div");
+      m.className = "ta-print";
+      m.textContent = ta.value.trim() || "\u2014";
+      ta.insertAdjacentElement("afterend", m);
+    });
+  }
+  function unmirror() {
+    $$(".ta-print").forEach(function (m) { m.remove(); });
+  }
+  window.addEventListener("beforeprint", mirrorTextareas);
+  window.addEventListener("afterprint", unmirror);
+
+  $$(".savepdf").forEach(function (btn) {
+    btn.addEventListener("click", function () { window.print(); });
+  });
+
+  /* Any brief that asks students to type gets the button, whether or not the
+     author remembered to add one. */
+  if ($("textarea") && !$(".savepdf")) {
+    var bar = document.createElement("p");
+    bar.className = "savebar";
+    bar.innerHTML = '<button type="button" class="savepdf">Save my answers as PDF</button>' +
+      '<span class="savenote">Nothing here is submitted or stored. Save the PDF before you ' +
+      'close the tab \u2014 your typed answers are your notes for class and for the Weekly Task.</span>';
+    document.body.appendChild(bar);
+  }
 
   /* ---------- 4. AI evaluation (Friction Move frame) ---------- */
   $$(".frict").forEach(function (box) {

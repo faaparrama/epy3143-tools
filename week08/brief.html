@@ -2249,6 +2249,16 @@ padding:.45rem .7rem;margin-top:.5rem;background:var(--ground);border-radius:0 3
 .fb.right .verdict{color:var(--ok)}
 .fb.wrong .verdict{color:var(--no)}
 
+.tfrow{display:flex;gap:.5rem;margin:.1rem 0 .5rem;flex-wrap:wrap}
+.tf{font:inherit;font-size:.95rem;font-weight:600;min-width:7rem;padding:.45rem .9rem;
+text-align:center;background:var(--card);border:1px solid var(--rule-strong);
+border-radius:4px;cursor:pointer;color:inherit}
+.tf:hover{border-color:var(--maroon)}
+.tf:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.tf[aria-pressed="true"]{border-color:var(--maroon);background:var(--maroon-soft)}
+.tf.is-right{border-color:var(--ok);background:var(--ok-bg)}
+.tf.is-wrong{border-color:var(--no);background:var(--no-bg)}
+
 .commit textarea{width:100%;min-height:4.5rem;font:inherit;font-size:.95rem;
 padding:.5rem .65rem;border:1px solid var(--rule-strong);border-radius:4px;
 background:var(--ground);color:var(--ink);resize:vertical}
@@ -2312,7 +2322,30 @@ padding:.85rem 1rem;margin:1.6rem 0;font-size:.94rem}
 .carry .lbl{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
 text-transform:uppercase;color:var(--maroon);display:block;margin-bottom:.4rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-@media print{.cmp{break-inside:avoid}}
+
+.pastewarn{font-size:.82rem;font-weight:600;line-height:1.4;margin:.45rem 0 0;
+color:var(--no);background:var(--no-bg);
+border:1px solid var(--no);border-radius:4px;padding:.45rem .7rem}
+
+.savebar{display:flex;gap:.7rem;align-items:baseline;flex-wrap:wrap;
+margin:2.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule-strong)}
+.savepdf{font:inherit;font-size:.9rem;font-weight:600;padding:.5rem 1rem;
+background:var(--maroon);color:#fff;border:0;border-radius:4px;cursor:pointer}
+.savepdf:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.savenote{font-size:.82rem;color:var(--muted);flex:1 1 16rem}
+.ta-print{display:none}
+@media print{
+.cmp{break-inside:avoid}
+
+.savebar,.commit .go,.commit .hint,.opt,.tf,.pastewarn,.no-print{display:none}
+.commit textarea,.frict textarea{display:none}
+.ta-print{display:block;white-space:pre-wrap;font-size:.95rem;
+border-left:3px solid var(--maroon);padding:.4rem 0 .4rem .7rem;margin:.3rem 0}
+
+.commit .locked[hidden]{display:block!important}
+.fb[hidden]{display:none!important}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;color:#555}
+}
 
 .fb-band{
 border-left:3px solid var(--maroon); background:var(--maroon-soft);
@@ -2400,7 +2433,7 @@ body{overflow-x:hidden}
 
 <div class="brief-head">
 <p><span class="moment">Study · Week 8</span></p>
-<p>Read Chapter 9 first, then this. Week 6 was what the head holds; Week 7 was what it builds. This week is what it can <strong>do</strong> with what it built — think critically, think creatively, and carry an idea from the room it was learned in to a room it was not.</p>
+<p>Read Chapter 9 of the textbook (Eggen &amp; Kauchak, 2025) first, then this. Week 6 was what the head holds; Week 7 was what it builds. This week is what it can <strong>do</strong> with what it built — think critically, think creatively, and carry an idea from the room it was learned in to a room it was not.</p>
 <p><span class="time">About 13 minutes, including the two places you stop and write — one of them a problem you should genuinely try.</span></p>
 <p><span class="time">Pair this with <strong>the Walkthrough</strong> — 13 minutes of me deciding what Carlos’s 19/20 was actually measuring, and not being sure it was only one thing.</span></p>
 <p><span class="time"><strong>This week runs online for both sections</strong> — Tuesday’s session is a page, not a room. Read this first; it is what the page assumes.</span></p>
@@ -2421,7 +2454,7 @@ body{overflow-x:hidden}
 <p>Hold your answer. Now read this one.</p>
 <p><strong>A general wants to capture a fortress at the centre of a country. Many roads radiate out from it. All are mined: a small group can pass safely, but a large force detonates the mines. A full-scale direct attack is impossible.</strong></p>
 <p>The general divides his army into small groups, sends each down a different road, and has them converge on the fortress at the same moment. It falls.</p>
-<p>Most people who read the fortress <em>after</em> attempting the tumour see the solution immediately: many weak rays from many directions, converging on the tumour. Most people who read the tumour alone — about nine in ten in Gick and Holyoak’s 1980 study — do not solve it. And most who read the fortress <em>first</em>, then the tumour, <strong>still do not solve it</strong> unless they are told the two are related.</p>
+<p>Most people who read the fortress <em>after</em> attempting the tumour see the solution immediately: many weak rays from many directions, converging on the tumour. Most people who read the tumour alone — about nine in ten in Gick and Holyoak’s (1980) study — do not solve it. And most who read the fortress <em>first</em>, then the tumour, <strong>still do not solve it</strong> unless they are told the two are related.</p>
 <p>That last finding is the whole week. The knowledge was there. It was not <em>detected</em> as relevant.</p>
 </div>
 </div>
@@ -2431,7 +2464,7 @@ body{overflow-x:hidden}
 <div class="defn">
 <p><span class="t">Transfer</span> — using what was learned in one context in another <span class="note">The new context can be near or far, and the result can help or hurt. Everything a teacher does is a bet on transfer: nobody teaches percentages so students can do the worksheet.</span></p>
 </div>
-<p>Perkins and Salomon’s account of what has to happen, and your own framing from the deck:</p>
+<p>Perkins and Salomon’s (2012) account of what has to happen, and your own framing from the deck:</p>
 <div class="defn">
 <p><span class="t">Detect</span> — notice that something you know is relevant here <span class="note">The fortress readers who failed the tumour did not lack the idea. They did not detect it. Detection runs on <strong>structure</strong>: the problems share a shape and nothing else, and novices see surfaces.</span></p>
 </div>
@@ -2524,7 +2557,7 @@ body{overflow-x:hidden}
 <p>Ethan reached the wrong answer in ninety seconds and felt finished. Maddie reached the right one slowly and felt unfinished. <strong>Confidence is a signal about the thinker, not about the answer</strong> — and a tool that returns a confident answer in four seconds inherits the problem.</p>
 </div>
 <div class="gotcha">
-<p><strong>Ethan’s move is a default, not a flaw.</strong> The chapter’s dual-process framing: a fast, intuitive system produces the answer that <em>fits</em>, and a slower, effortful system checks it — if it is engaged. It usually is not, because the fast answer arrives with a feeling of rightness. Critical thinking is largely the habit of engaging the check when the feeling says you do not need to. Your Friction Move this week (<strong>bat and ball</strong>) tests whether you do, and whether the tool does.</p>
+<p><strong>Ethan’s move is a default, not a flaw.</strong> The chapter’s dual-process framing (Kahneman, 2011): a fast, intuitive system produces the answer that <em>fits</em>, and a slower, effortful system checks it — if it is engaged. It usually is not, because the fast answer arrives with a feeling of rightness. Critical thinking is largely the habit of engaging the check when the feeling says you do not need to. Your Friction Move this week (<strong>bat and ball</strong>) tests whether you do, and whether the tool does.</p>
 </div>
 </section>
 <section id="creativity-generating-then-choosing" class="level2">
@@ -2622,10 +2655,13 @@ body{overflow-x:hidden}
 </section>
 <section id="sources" class="level2">
 <h2 class="anchored" data-anchor-id="sources">Sources</h2>
-<p>Kahneman, D. (2011). <em>Thinking, fast and slow.</em> Farrar, Straus and Giroux.</p>
-<p>Frederick, S. (2005). Cognitive reflection and decision making. <em>Journal of Economic Perspectives, 19</em>(4), 25–42.</p>
-<p>Stanovich, K. E., &amp; West, R. F. (1997). Reasoning independently of prior belief and individual differences in actively open-minded thinking. <em>Journal of Educational Psychology, 89</em>(2), 342–357.</p>
 <p>Baron, J. (1985). <em>Rationality and intelligence.</em> Cambridge University Press.</p>
+<p>Eggen, P. D., &amp; Kauchak, D. P. (2025). <em>Using educational psychology in teaching</em> (12th ed.). Pearson. <strong>This week: Chapter 9.</strong></p>
+<p>Frederick, S. (2005). Cognitive reflection and decision making. <em>Journal of Economic Perspectives, 19</em>(4), 25–42.</p>
+<p>Gick, M. L., &amp; Holyoak, K. J. (1980). Analogical problem solving. <em>Cognitive Psychology, 12</em>(3), 306–355.</p>
+<p>Kahneman, D. (2011). <em>Thinking, fast and slow.</em> Farrar, Straus and Giroux.</p>
+<p>Perkins, D. N., &amp; Salomon, G. (2012). Knowledge to go: A motivational and dispositional view of transfer. <em>Educational Psychologist, 47</em>(3), 248–258.</p>
+<p>Stanovich, K. E., &amp; West, R. F. (1997). Reasoning independently of prior belief and individual differences in actively open-minded thinking. <em>Journal of Educational Psychology, 89</em>(2), 342–357.</p>
 </section>
 
 </main>
@@ -3063,6 +3099,132 @@ body{overflow-x:hidden}
     box.addEventListener("change", render);
     render();
   });
+
+  /* ---------- 2b. True / false quick check -----------------------------
+     Authoring is deliberately lighter than .selfcheck: no hand-written
+     buttons. Write the statement, set data-answer to "true" or "false",
+     and supply one .fb per side. The two buttons are generated here, so a
+     brief can carry six of these without six blocks of HTML.
+     With JS off the statement and both rationales are still readable. */
+  $$(".truefalse").forEach(function (box) {
+    var right = (box.getAttribute("data-answer") || "").toLowerCase();
+    if (right !== "true" && right !== "false") return;
+    var fbs = {};
+    $$(".fb", box).forEach(function (f) {
+      fbs[(f.getAttribute("data-for") || "").toLowerCase()] = f;
+      f.hidden = true;
+    });
+
+    var row = document.createElement("div");
+    row.className = "tfrow";
+    ["true", "false"].forEach(function (val) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "tf";
+      b.setAttribute("data-tf", val);
+      b.setAttribute("aria-pressed", "false");
+      b.textContent = val === "true" ? "True" : "False";
+      row.appendChild(b);
+    });
+
+    /* after the statement, before the feedback */
+    var first = $(".fb", box);
+    if (first) box.insertBefore(row, first); else box.appendChild(row);
+
+    $$(".tf", row).forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var pick = btn.getAttribute("data-tf");
+        var ok = pick === right;
+        $$(".tf", row).forEach(function (b) {
+          b.setAttribute("aria-pressed", "false");
+          b.classList.remove("is-right", "is-wrong");
+        });
+        Object.keys(fbs).forEach(function (k) { fbs[k].hidden = true; });
+        btn.setAttribute("aria-pressed", "true");
+        btn.classList.add(ok ? "is-right" : "is-wrong");
+        if (fbs[pick]) {
+          fbs[pick].hidden = false;
+          fbs[pick].classList.add(ok ? "right" : "wrong");
+        }
+        /* never leave them looking at a wrong answer alone */
+        if (!ok) {
+          var r = $('.tf[data-tf="' + right + '"]', row);
+          if (r) r.classList.add("is-right");
+        }
+      });
+    });
+  });
+
+  /* ---------- 2b2. Paste guard ------------------------------------------
+     Same contract as the EPY 3143 workbench (shared/make_workbench.py,
+     guardPaste): paste and drop are blocked outright on the boxes where the
+     student is meant to think, and the only messaging is an in-the-moment
+     alert — no upfront policy paragraph, because the warning a student
+     actually gets is the one that teaches.
+
+     Every textarea in a brief component is guarded. Opt one out with
+     data-paste on the component or any ancestor — e.g. a box that is
+     *supposed* to receive a model's output. */
+  var GUARD_TEXT = "This part is yours — type it. If you drafted elsewhere for an " +
+    "access reason, tell Dr. Parra-Martinez and he will take it that way.";
+
+  $$(".cmp textarea, .frict textarea, .commit textarea").forEach(function (ta) {
+    if (ta._guarded) return;
+    ta._guarded = true;
+    var box = ta.closest("[data-paste]");
+    if (box) return;
+
+    var warn = document.createElement("p");
+    warn.setAttribute("role", "alert");
+    warn.className = "pastewarn no-print";
+    warn.textContent = GUARD_TEXT;
+    warn.hidden = true;
+    ta.insertAdjacentElement("afterend", warn);
+
+    var block = function (e) {
+      e.preventDefault();
+      warn.hidden = false;
+      clearTimeout(warn._t);
+      warn._t = setTimeout(function () { warn.hidden = true; }, 8000);
+    };
+    ta.addEventListener("paste", block);
+    ta.addEventListener("drop", block);
+  });
+
+  /* ---------- 2c. Save your work as PDF --------------------------------
+     Nothing on this page is submitted anywhere and nothing is stored, so a
+     student who closes the tab loses every answer they typed. Browsers do
+     not print the *current* value of a textarea reliably, so before the
+     print dialog opens each textarea's text is mirrored into a sibling
+     div that prints, and removed again afterwards. */
+  function mirrorTextareas() {
+    $$("textarea").forEach(function (ta) {
+      var m = document.createElement("div");
+      m.className = "ta-print";
+      m.textContent = ta.value.trim() || "\u2014";
+      ta.insertAdjacentElement("afterend", m);
+    });
+  }
+  function unmirror() {
+    $$(".ta-print").forEach(function (m) { m.remove(); });
+  }
+  window.addEventListener("beforeprint", mirrorTextareas);
+  window.addEventListener("afterprint", unmirror);
+
+  $$(".savepdf").forEach(function (btn) {
+    btn.addEventListener("click", function () { window.print(); });
+  });
+
+  /* Any brief that asks students to type gets the button, whether or not the
+     author remembered to add one. */
+  if ($("textarea") && !$(".savepdf")) {
+    var bar = document.createElement("p");
+    bar.className = "savebar";
+    bar.innerHTML = '<button type="button" class="savepdf">Save my answers as PDF</button>' +
+      '<span class="savenote">Nothing here is submitted or stored. Save the PDF before you ' +
+      'close the tab \u2014 your typed answers are your notes for class and for the Weekly Task.</span>';
+    document.body.appendChild(bar);
+  }
 
   /* ---------- 4. AI evaluation (Friction Move frame) ---------- */
   $$(".frict").forEach(function (box) {
