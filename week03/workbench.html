@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Applied Workshop</title>
+  <title>Plan It, Then Check the AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     textarea { resize: vertical; }
@@ -23,6 +23,10 @@
     @media (pointer: coarse) {
       button, .touch-target { min-height: 2.75rem; }
     }
+
+    .choice-opt { cursor: pointer; }
+    .choice-opt:has(input:checked) { background: #5D1725; border-color: #5D1725; color: #fff; }
+    .choice-opt:has(input:focus-visible) { outline: 3px solid #5D1725; outline-offset: 2px; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -63,8 +67,8 @@
     <header class="flex justify-between items-end mb-6 pb-4 border-b border-gray-200 gap-4 flex-wrap">
       <div>
         <p class="text-xs font-bold text-[#5D1725] uppercase tracking-widest mb-1">EPY 3143 · Week 3</p>
-        <h1 class="text-2xl md:text-3xl font-black text-[#5D1725]">Applied Workshop</h1>
-        <p class="text-gray-600 font-medium text-sm mt-1">Cognitive Development in Action: Designing Instruction & Examining AI</p>
+        <h1 class="text-2xl md:text-3xl font-black text-[#5D1725]">Plan It, Then Check the AI</h1>
+        <p class="text-gray-600 font-medium text-sm mt-1">One hard concept, a Piaget plan and a Vygotsky plan, and an AI's version checked against both</p>
       </div>
       <div class="no-print flex flex-col items-end gap-2">
         <div class="flex gap-2 flex-wrap justify-end">
@@ -84,6 +88,8 @@
         </div>
       </div>
     </header>
+
+    <p id="lockStamp" class="hidden text-xs text-gray-600 mb-3"></p>
 
     <div id="studentInfo" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 print-box">
       <div>
@@ -112,53 +118,54 @@
 
     <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
       <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
-      <p class="text-sm text-amber-900 mb-3">Choose a concept your future students/clients typically struggle with because of their developmental stage or prior knowledge. Work through each part below — completing Parts 1 and 2 before turning to AI.</p>
+      <p class="text-sm text-amber-900 mb-3">Choose a concept your future students struggle with because of their age or what they already know. Do Part 1 before you open any chatbot.</p>
     </div>
 
-    <!-- CONCEPT SELECTION -->
+    <!-- THE CONCEPT -->
     <section class="mb-8 print-box" id="part-0">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Concept Selection</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">The concept</h2>
       </div>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
-          <label for="concept" class="block text-sm font-bold text-gray-800 mb-1">What concept will students or clients typically struggle to learn?</label>
+          <label for="concept" class="block text-sm font-bold text-gray-800 mb-1">What concept do students or clients typically struggle to learn?</label>
           <input type="text" id="concept" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Fractions as division (3rd Grade Math), Metaphor vs. Simile (7th Grade ELA), Carrying in subtraction (2nd Grade)">
         </div>
         <div>
-          <label for="whyHard" class="block text-sm font-bold text-gray-800 mb-1">Why is it hard for this age or group? (developmental stage, prior knowledge, or common misconception)</label>
+          <label for="whyHard" class="block text-sm font-bold text-gray-800 mb-1">Why is it hard at this age: developmental stage, prior knowledge, or a misconception?</label>
           <textarea rows="2" id="whyHard" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
 
-    <!-- PART 1 — YOUR INSTRUCTIONAL PLAN -->
+    <!-- PART 1 — YOUR PLAN -->
     <section class="mb-8 print-box" id="part-1">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 1 — Your Instructional Plan</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-[#5D1725] pl-3">Part 1 — Your plan</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">2 pts · Do this before AI</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Complete this section on your own before opening any chatbot.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">On your own, before any chatbot.</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="piagetPlan" class="block text-sm font-bold text-gray-800 mb-1">Using <strong>Piaget's accommodation</strong>: How will you create productive disequilibrium?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">What experience, question, or contradiction will force students to realize their current schema won't work? Avoid just telling or re-explaining.</p>
+          <label for="piagetPlan" class="block text-sm font-bold text-gray-800 mb-1"><strong>Piaget's accommodation.</strong> What experience will create disequilibrium, so students see their current schema doesn't work?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">A question, a demonstration, or a contradiction they meet. Telling or re-explaining doesn't create it.</p>
           <textarea rows="4" id="piagetPlan" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Show students two different-sized glasses with the same amount of water and ask which has more. Their prediction surfaces the existing schema, and the measurement result forces them to revise it."></textarea>
         </div>
         <div>
-          <label for="vygotskyPlan" class="block text-sm font-bold text-gray-800 mb-1">Using <strong>Vygotsky's ZPD and scaffolding</strong>: What specific supports will you provide, and how will you fade them?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Think about what students can do with support but not alone. What does the scaffold look like, and when do you pull it back?</p>
+          <label for="vygotskyPlan" class="block text-sm font-bold text-gray-800 mb-1"><strong>Vygotsky's scaffolding.</strong> Describe one support inside the ZPD and the point where you fade it.</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">The ZPD is what students can do with help but not yet alone.</p>
           <textarea rows="4" id="vygotskyPlan" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Scaffold 1: Pair students to compare water levels together before I explain (peer MKO). Scaffold 2: Guided measurement sheet with sentence starters. Fade: Remove sentence starters after first successful comparison; full independence by lesson 3."></textarea>
         </div>
       </div>
     </section>
 
-    <!-- PART 2 — AI RESPONSE -->
+    <!-- PART 2 — ASK AN AI -->
     <section class="mb-8 print-box page-break" id="part-2">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 2 — AI Response</h2>
-        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Use ChatGPT, Claude, Gemini, etc.</span></div>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 2 — Ask an AI</h2>
+        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Not graded</span></div>
       </div>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Not graded. Paste the prompt below into any chatbot, then paste its answer here. Part 3 checks it.</p>
       <div class="mb-4 pl-4 text-sm text-gray-700"><div class="bg-white p-4 rounded-lg border border-gray-200"><p class="text-xs font-bold text-gray-500 uppercase mb-2">Use this prompt (swap in your concept and grade):</p><p class="text-sm font-mono text-gray-800 leading-relaxed">&quot;Explain [your concept] for a student in grade [your grade] and give me two scaffolds. Don't just simplify vocabulary; actually adjust the type of explanation to match how this age/grade typically thinks.&quot;</p></div></div>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
@@ -169,25 +176,24 @@
       </div>
     </section>
 
-    <!-- PART 3 — YOUR EVALUATION -->
+    <!-- PART 3 — CHECK THE AI AGAINST THIS WEEK' -->
     <section class="mb-8 print-box" id="part-3">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 3 — Your Evaluation</h2>
+        <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 3 — Check the AI against this week's theories</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">4 pts</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Now compare the AI's response against what you would have done.</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="eval1" class="block text-sm font-bold text-gray-800 mb-1">Did the AI's explanation actually match how students at this age/grade typically think? Did it go beyond vocabulary simplification to accommodate their developmental stage?</label>
-          <textarea rows="3" id="eval1" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Cite specific phrases from the AI&#x27;s response as evidence..."></textarea>
+          <label for="eval1" class="block text-sm font-bold text-gray-800 mb-1">In Piaget's terms, did the AI's explanation match how students at this age think?</label>
+          <textarea rows="3" id="eval1" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Quote the AI&#x27;s words as evidence. Simpler vocabulary alone doesn&#x27;t count."></textarea>
         </div>
         <div>
-          <label for="eval2" class="block text-sm font-bold text-gray-800 mb-1">Did the AI's scaffolds reflect Vygotsky's idea of the ZPD — supporting what students can't quite do yet, not what they already know? Did it suggest how or when to fade the support?</label>
-          <textarea rows="3" id="eval2" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="What did the AI get right or wrong about scaffolding strategy?"></textarea>
+          <label for="eval2" class="block text-sm font-bold text-gray-800 mb-1">Did the AI's scaffolds target the ZPD: what students can do with help but not yet alone?</label>
+          <textarea rows="3" id="eval2" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Quote one scaffold. Note whether it says when to fade."></textarea>
         </div>
         <div>
-          <label for="eval3" class="block text-sm font-bold text-gray-800 mb-1">Based on this exercise: could AI function as a <em>More Knowledgeable Other (MKO)</em> for your student, or more as a Microsystem influence in their learning environment? Explain briefly using evidence from the response.</label>
-          <textarea rows="4" id="eval3" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Be specific. Reference what the AI did or didn&#x27;t do that supports your claim..."></textarea>
+          <label for="eval3" class="block text-sm font-bold text-gray-800 mb-1">Could this AI act as a More Knowledgeable Other (MKO) for your student, or only as part of their microsystem?</label>
+          <textarea rows="4" id="eval3" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Use evidence from the response."></textarea>
         </div>
       </div>
     </section>
@@ -195,21 +201,21 @@
     <!-- PART 4 — PEER FEEDBACK -->
     <section class="mb-8 print-box" id="part-4">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 4 — Peer Feedback</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 4 — Peer feedback</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">4 pts</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Review a classmate's AI response (Part 2). Imagine you are a student at that age. How would you improve your classmate's AI response based on what you learned this week?</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Read a classmate's AI response (Part 2) as a student that age.</p>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
-          <label for="classmateName" class="block text-sm font-bold text-gray-800 mb-1">Classmate's Name</label>
+          <label for="classmateName" class="block text-sm font-bold text-gray-800 mb-1">Classmate's name</label>
           <input type="text" id="classmateName" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Classmate&#x27;s name">
         </div>
         <div>
-          <label for="classmateContext" class="block text-sm font-bold text-gray-800 mb-1">Their Concept & Grade</label>
+          <label for="classmateContext" class="block text-sm font-bold text-gray-800 mb-1">Their concept and grade</label>
           <input type="text" id="classmateContext" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Photosynthesis, 5th Grade">
         </div>
         <div>
-          <label for="peerFeedback" class="block text-sm font-bold text-gray-800 mb-1">From the perspective of a student that age: What would you want the AI to do differently? Use at least one idea from Piaget or Vygotsky in your suggestion.</label>
+          <label for="peerFeedback" class="block text-sm font-bold text-gray-800 mb-1">As a student that age, what is one thing the AI should do differently? Use one idea from Piaget or Vygotsky.</label>
           <textarea rows="5" id="peerFeedback" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., As a 5th grader, I would want the AI to not just tell me the definition of photosynthesis but actually show me something that would make me confused first — like asking why plants don&#x27;t need to be fed like animals. That confusion (Piaget) would make me actually want the explanation. The AI should then scaffold by having me guess before explaining, not just give answers."></textarea>
         </div>
       </div>
@@ -220,6 +226,7 @@
       or <strong>Save &amp; Download PDF</strong> to submit on Canvas. Clearing your browser data clears this page.
     </footer>
   </div>
+
 
   <div id="copyModal" role="dialog" aria-modal="true" aria-labelledby="copyModalTitle"
        class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
@@ -250,82 +257,82 @@
       ],
       [
             "concept",
-            "Concept Selection · Concept"
+            "The concept · Concept"
       ],
       [
             "whyHard",
-            "Concept Selection · Why it is hard"
+            "The concept · Why it is hard"
       ],
       [
             "piagetPlan",
-            "Part 1 — Your Instructional Plan · Piaget — disequilibrium"
+            "Part 1 — Your plan · Piaget — disequilibrium"
       ],
       [
             "vygotskyPlan",
-            "Part 1 — Your Instructional Plan · Vygotsky — scaffolds and fading"
+            "Part 1 — Your plan · Vygotsky — scaffolds and fading"
       ],
       [
             "aiOutput",
-            "Part 2 — AI Response · AI response"
+            "Part 2 — Ask an AI · AI response"
       ],
       [
             "eval1",
-            "Part 3 — Your Evaluation · Q1 — stage-appropriate?"
+            "Part 3 — Check the AI against this week's theories · Q1 — stage-appropriate?"
       ],
       [
             "eval2",
-            "Part 3 — Your Evaluation · Q2 — ZPD and fading?"
+            "Part 3 — Check the AI against this week's theories · Q2 — ZPD and fading?"
       ],
       [
             "eval3",
-            "Part 3 — Your Evaluation · Q3 — MKO or Microsystem?"
+            "Part 3 — Check the AI against this week's theories · Q3 — MKO or Microsystem?"
       ],
       [
             "classmateName",
-            "Part 4 — Peer Feedback · Classmate"
+            "Part 4 — Peer feedback · Classmate"
       ],
       [
             "classmateContext",
-            "Part 4 — Peer Feedback · Their concept and grade"
+            "Part 4 — Peer feedback · Their concept and grade"
       ],
       [
             "peerFeedback",
-            "Part 4 — Peer Feedback · Your feedback"
+            "Part 4 — Peer feedback · Your feedback"
       ]
 ];
-    const OPTIONAL = new Set([]);
+    const OPTIONAL = new Set(["aiOutput"]);
     const WORDY = [["piagetPlan", "Piaget"], ["vygotskyPlan", "Vygotsky"], ["aiOutput", "AI resp"], ["eval1", "Eval 1"], ["eval2", "Eval 2"], ["eval3", "Eval 3"], ["peerFeedback", "Peer"]];
     const BLOCKS = [
       [
-            "CONCEPT SELECTION",
+            "THE CONCEPT",
             [
                   [
-                        "What concept will students or clients typically struggle to learn?",
+                        "What concept do students or clients typically struggle to learn?",
                         "concept"
                   ],
                   [
-                        "Why is it hard for this age or group? (developmental stage, prior knowledge, or common misconception)",
+                        "Why is it hard at this age: developmental stage, prior knowledge, or a misconception?",
                         "whyHard"
                   ]
             ],
             ""
       ],
       [
-            "PART 1 — YOUR INSTRUCTIONAL PLAN",
+            "PART 1 — YOUR PLAN",
             [
                   [
-                        "Using Piaget's accommodation: How will you create productive disequilibrium?",
+                        "Piaget's accommodation. What experience will create disequilibrium, so students see their current schema doesn't work?",
                         "piagetPlan"
                   ],
                   [
-                        "Using Vygotsky's ZPD and scaffolding: What specific supports will you provide, and how will you fade them?",
+                        "Vygotsky's scaffolding. Describe one support inside the ZPD and the point where you fade it.",
                         "vygotskyPlan"
                   ]
             ],
             ""
       ],
       [
-            "PART 2 — AI RESPONSE",
+            "PART 2 — ASK AN AI",
             [
                   [
                         "Paste the AI's full response here:",
@@ -335,18 +342,18 @@
             ""
       ],
       [
-            "PART 3 — YOUR EVALUATION",
+            "PART 3 — CHECK THE AI AGAINST THIS WEEK'S THEORIES",
             [
                   [
-                        "Did the AI's explanation actually match how students at this age/grade typically think? Did it go beyond vocabulary simplification to accommodate their developmental stage?",
+                        "In Piaget's terms, did the AI's explanation match how students at this age think?",
                         "eval1"
                   ],
                   [
-                        "Did the AI's scaffolds reflect Vygotsky's idea of the ZPD — supporting what students can't quite do yet, not what they already know? Did it suggest how or when to fade the support?",
+                        "Did the AI's scaffolds target the ZPD: what students can do with help but not yet alone?",
                         "eval2"
                   ],
                   [
-                        "Based on this exercise: could AI function as a More Knowledgeable Other (MKO) for your student, or more as a Microsystem influence in their learning environment? Explain briefly using evidence from the response.",
+                        "Could this AI act as a More Knowledgeable Other (MKO) for your student, or only as part of their microsystem?",
                         "eval3"
                   ]
             ],
@@ -356,15 +363,15 @@
             "PART 4 — PEER FEEDBACK",
             [
                   [
-                        "Classmate's Name",
+                        "Classmate's name",
                         "classmateName"
                   ],
                   [
-                        "Their Concept & Grade",
+                        "Their concept and grade",
                         "classmateContext"
                   ],
                   [
-                        "From the perspective of a student that age: What would you want the AI to do differently? Use at least one idea from Piaget or Vygotsky in your suggestion.",
+                        "As a student that age, what is one thing the AI should do differently? Use one idea from Piaget or Vygotsky.",
                         "peerFeedback"
                   ]
             ],
@@ -372,6 +379,43 @@
       ]
 ];
     const STORAGE_KEY = 'epy3143_workshop_v1';
+    const LOCK_HASH = null;
+    const LOCK_KEY = STORAGE_KEY + '_unlocked';
+    function codeHash(code) {
+      const norm = 'epy3143:' + code.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const bytes = new TextEncoder().encode(norm);
+      let h = 0x811c9dc5;
+      for (const b of bytes) { h ^= b; h = Math.imul(h, 0x01000193) >>> 0; }
+      return h >>> 0;
+    }
+    function unlockedAt() { try { return localStorage.getItem(LOCK_KEY) || ''; } catch (e) { return ''; } }
+    function showStamp() {
+      const t = unlockedAt(), s = document.getElementById('lockStamp');
+      if (!LOCK_HASH || !t || !s) return;
+      s.textContent = 'Class code entered ' + t + '.';
+      s.classList.remove('hidden');
+    }
+    function setupLock() {
+      const screen = document.getElementById('lockScreen');
+      if (!LOCK_HASH || !screen) return;
+      const main = document.querySelector('body > div.max-w-4xl');
+      if (unlockedAt()) { screen.remove(); showStamp(); return; }
+      main.inert = true; main.setAttribute('aria-hidden', 'true');
+      const input = document.getElementById('lockInput');
+      input.focus();
+      document.getElementById('lockForm').addEventListener('submit', e => {
+        e.preventDefault();
+        if (codeHash(input.value) !== LOCK_HASH) {
+          document.getElementById('lockMsg').textContent = 'That is not the code. Check with the room.';
+          return;
+        }
+        const n = new Date(), pad = x => String(x).padStart(2, '0');
+        const t = n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate()) + ' ' + pad(n.getHours()) + ':' + pad(n.getMinutes());
+        try { localStorage.setItem(LOCK_KEY, t); } catch (err) {}
+        main.inert = false; main.removeAttribute('aria-hidden');
+        screen.remove(); showStamp();
+      });
+    }
     const REQUIRED = FIELDS.filter(([id]) => !OPTIONAL.has(id));
     const ids = FIELDS.map(f => f[0]);
     const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
@@ -434,10 +478,11 @@
     }
     function buildText() {
       const L = [];
-      L.push('EPY 3143 - Week 3 - Applied Workshop'); L.push(RULE);
+      L.push('EPY 3143 - Week 3 - Plan It, Then Check the AI'); L.push(RULE);
       L.push('Name:  ' + (val('studentName') || '(blank)'));
       L.push('Field: ' + (val('gradeSubject') || '(blank)'));
       L.push('Date:  ' + (val('sessionDate') || '(blank)'));
+      if (LOCK_HASH) L.push('Class code entered: ' + (unlockedAt() || '(not entered)'));
       BLOCKS.forEach(b => blockText(L, b));
       L.push(RULE);
       const missing = REQUIRED.filter(([id]) => !val(id)).length;
@@ -447,7 +492,7 @@
       return L.join('\n');
     }
     function buildPartText(i) {
-      const L = ['EPY 3143 - Week 3 - Applied Workshop', 'Name: ' + (val('studentName') || '(blank)')];
+      const L = ['EPY 3143 - Week 3 - Plan It, Then Check the AI', 'Name: ' + (val('studentName') || '(blank)')];
       blockText(L, BLOCKS[i]);
       return L.join('\n');
     }
@@ -524,11 +569,36 @@
       if (!confirm('Clear all your responses? This cannot be undone.')) return;
       localStorage.removeItem(STORAGE_KEY);
       ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      document.querySelectorAll('.choice-why').forEach(w => w.classList.add('hidden'));
+      document.querySelectorAll('[id^="checkMsg-"]').forEach(m => { m.textContent = ''; });
       refresh();
     }
-    function refresh() { updateMirrors(); updateStamp(); }
+    function syncChoices() {
+      document.querySelectorAll('input[data-choice]').forEach(h => {
+        document.querySelectorAll('input[name="' + h.id + '"]').forEach(r => { r.checked = (r.value === h.value); });
+      });
+    }
+    function checkPart(i) {
+      const sec = document.getElementById('part-' + i);
+      const whys = sec.querySelectorAll('.choice-why');
+      const msg = document.getElementById('checkMsg-' + i);
+      const open = [...whys].filter(w => !val(w.dataset.whyFor)).length;
+      if (open) { msg.textContent = 'Sort all of them first — ' + open + ' still open.'; return; }
+      let same = 0;
+      whys.forEach(w => {
+        const mine = val(w.dataset.whyFor).split(' · ')[0];
+        const ok = mine === w.dataset.answer;
+        if (ok) same++;
+        if (!w.dataset.base) w.dataset.base = w.innerHTML;
+        w.innerHTML = '<strong>' + (ok ? 'Same as the key (' : 'The key says ') + w.dataset.answer + (ok ? ').' : ', you said ' + mine + '.') + '</strong> ' + w.dataset.base;
+        w.classList.remove('hidden');
+      });
+      msg.textContent = same + ' of ' + whys.length + ' match the key. Where yours differs, read the reason before you decide who is right.';
+    }
+    function refresh() { syncChoices(); updateMirrors(); updateStamp(); }
 
     document.addEventListener('DOMContentLoaded', () => {
+      setupLock();
       buildMirrors(); guardPaste(); restoreAll();
       const d = document.getElementById('sessionDate');
       if (d && !d.value) {
@@ -538,6 +608,10 @@
       ids.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', () => { saveAll(); refresh(); });
+      });
+      document.querySelectorAll('input[data-choice]').forEach(h => {
+        document.querySelectorAll('input[name="' + h.id + '"]').forEach(r =>
+          r.addEventListener('change', () => { h.value = r.value; saveAll(); refresh(); }));
       });
       document.getElementById('copyModal').addEventListener('click', e => { if (e.target.id === 'copyModal') closeCopyModal(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCopyModal(); });

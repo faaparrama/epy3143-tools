@@ -118,7 +118,7 @@
 
     <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
       <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
-      <p class="text-sm text-amber-900 mb-3">Plan how you will <strong>model</strong> and <strong>reinforce</strong> two behaviors in your own classroom, find out which of the four students your plan could produce, and write the <strong>feedback rule</strong> your tool will follow. Supports Milestone 3.</p>
+      <p class="text-sm text-amber-900 mb-3">Plan how you will <strong>model</strong> and <strong>reinforce</strong> two behaviors in your own classroom, find out which of the four students your plan could produce, and write the <strong>feedback rule</strong> your tool (the tool you are building for the Final Project) will follow. Supports Milestone 3.</p>
       <p class="text-sm text-amber-900 mb-3">Part 6 (the swap) isn't on this page. Do it as a Canvas reply this week: read one classmate's plan and say which of the four students it would produce.</p>
     </div>
 
@@ -180,7 +180,7 @@
         <div>
           <label for="encMisfire" class="block text-sm font-bold text-gray-800 mb-1">Which of the four students could this plan produce? Why?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Mila (does only what pays) · Michael (gives up when it's out of reach) · Carlie (can't see the link) · Luis (games the schedule)</p>
-          <textarea rows="3" id="encMisfire" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="3" id="encMisfire" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Choir: praise for every student who volunteers a solo could produce Mila. Students volunteer for the praise and pick the easiest solos."></textarea>
         </div>
       </div>
     </section>
@@ -224,22 +224,14 @@
     <section class="mb-8 print-box" id="part-3">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
         <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 4 — Ask an AI</h2>
-        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
+        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Not graded</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">After class. Give any AI tool your setting and your two behaviors. Ask for behaviorist and modeling strategies for each. Paste what it says, then judge it against Chapter 6 and your plan.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Not graded. After class. Give any AI tool your setting and your two behaviors. Ask for behaviorist and modeling strategies for each. Paste what it says, then judge it against Chapter 6 and your plan.</p>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
           <label for="aiList" class="block text-sm font-bold text-gray-800 mb-1">What the AI suggested</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Paste is allowed in this box only.</p>
           <textarea rows="6" id="aiList" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
-        </div>
-        <div>
-          <label for="aiPractical" class="block text-sm font-bold text-gray-800 mb-1">Which suggestions seem most practical and effective, compared to Chapter 6?</label>
-          <textarea rows="2" id="aiPractical" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
-        </div>
-        <div>
-          <label for="aiGeneric" class="block text-sm font-bold text-gray-800 mb-1">Which seem generic, or inappropriate for your setting?</label>
-          <textarea rows="2" id="aiGeneric" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
           <label for="aiMissing" class="block text-sm font-bold text-gray-800 mb-1">What is missing from its list that you would add?</label>
@@ -375,14 +367,6 @@
             "Part 4 — Ask an AI · What the AI suggested"
       ],
       [
-            "aiPractical",
-            "Part 4 — Ask an AI · Practical"
-      ],
-      [
-            "aiGeneric",
-            "Part 4 — Ask an AI · Generic or inappropriate"
-      ],
-      [
             "aiMissing",
             "Part 4 — Ask an AI · Missing"
       ],
@@ -403,8 +387,8 @@
             "Part 5 — A feedback rule for your Final Project · What it models"
       ]
 ];
-    const OPTIONAL = new Set([]);
-    const WORDY = [["belief", "Belief"], ["encModel", "Model"], ["encSetup", "Setup"], ["encConsequence", "Consequence"], ["encMisfire", "Misfire"], ["disReplace", "Replace"], ["disModel", "Model"], ["disConsequence", "Consequence"], ["disMisfire", "Misfire"], ["aiPractical", "Practical"], ["aiGeneric", "Generic"], ["aiMissing", "Missing"], ["fbWhen", "When"], ["fbRespond", "Respond"], ["fbNever", "Never"], ["fbModel", "Models"]];
+    const OPTIONAL = new Set(["aiList", "aiMissing"]);
+    const WORDY = [["belief", "Belief"], ["encModel", "Model"], ["encSetup", "Setup"], ["encConsequence", "Consequence"], ["encMisfire", "Misfire"], ["disReplace", "Replace"], ["disModel", "Model"], ["disConsequence", "Consequence"], ["disMisfire", "Misfire"], ["aiMissing", "Missing"], ["fbWhen", "When"], ["fbRespond", "Respond"], ["fbNever", "Never"], ["fbModel", "Models"]];
     const BLOCKS = [
       [
             "PART 1 — YOUR CLASSROOM",
@@ -486,14 +470,6 @@
                   [
                         "What the AI suggested",
                         "aiList"
-                  ],
-                  [
-                        "Which suggestions seem most practical and effective, compared to Chapter 6?",
-                        "aiPractical"
-                  ],
-                  [
-                        "Which seem generic, or inappropriate for your setting?",
-                        "aiGeneric"
                   ],
                   [
                         "What is missing from its list that you would add?",

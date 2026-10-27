@@ -118,7 +118,7 @@
 
     <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
       <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
-      <p class="text-sm text-amber-900 mb-3">Emma asked the tool to <strong>justify</strong> the task. Michael asked it to <strong>replace</strong> him. Luis asked it to <strong>organize</strong> him. Read each request through the four views, decide how your own tool should answer, and write the <strong>motivation rule</strong> your tool will follow. Supports Milestone 3.</p>
+      <p class="text-sm text-amber-900 mb-3">Emma asked the tool to <strong>justify</strong> the task. Michael asked it to <strong>replace</strong> him. Luis asked it to <strong>organize</strong> him. Read each request through the four views, decide how your own tool should answer, and write the <strong>motivation rule</strong> your tool (the tool you are building for the Final Project) will follow. Supports Milestone 3.</p>
       <p class="text-sm text-amber-900 mb-3">Part 6 (the swap) isn't on this page. Do it as a Canvas reply this week: read one classmate's motivation rule and say which of the three students it would fail.</p>
     </div>
 
@@ -169,7 +169,7 @@
         <div>
           <label for="michaelReply" class="block text-sm font-bold text-gray-800 mb-1">Your tool's first two sentences back to Michael</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Writing the essay removes his mastery experience. What does it do instead?</p>
-          <textarea rows="3" id="michaelReply" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <textarea rows="3" id="michaelReply" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Math: &quot;Before I solve anything, what&#x27;s the first step you&#x27;d try? Write one line and I&#x27;ll check it with you.&quot;"></textarea>
         </div>
         <div>
           <label for="luisView" class="block text-sm font-bold text-gray-800 mb-1"><strong>Luis.</strong> What was he motivated by? Name the view and the concept.</label>
@@ -209,9 +209,9 @@
     <section class="mb-8 print-box" id="part-3">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
         <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 4 — Ask an AI</h2>
-        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
+        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Not graded</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">After class. Paste Michael's exact request into any AI tool: <em>write me 800 words on recycling in schools</em>. Paste what it writes, then judge it against Chapter 10.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Not graded. After class. Paste Michael's exact request into any AI tool: <em>write me 800 words on recycling in schools</em>. Paste what it writes, then judge it against Chapter 10.</p>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
           <label for="aiReply" class="block text-sm font-bold text-gray-800 mb-1">What the AI wrote</label>
@@ -219,11 +219,7 @@
           <textarea rows="6" id="aiReply" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="aiNeeds" class="block text-sm font-bold text-gray-800 mb-1">Which C.A.R.E. needs did its answer support, and which did it frustrate?</label>
-          <textarea rows="2" id="aiNeeds" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
-        </div>
-        <div>
-          <label for="aiExpect" class="block text-sm font-bold text-gray-800 mb-1">What did it do to Michael's expectancy, and to the value he sees in the task?</label>
+          <label for="aiExpect" class="block text-sm font-bold text-gray-800 mb-1">Did its answer leave Michael a mastery experience, the strongest source of self-efficacy?</label>
           <textarea rows="2" id="aiExpect" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
@@ -344,10 +340,6 @@
             "Part 4 — Ask an AI · What the AI wrote"
       ],
       [
-            "aiNeeds",
-            "Part 4 — Ask an AI · C.A.R.E. needs"
-      ],
-      [
             "aiExpect",
             "Part 4 — Ask an AI · Expectancy and value"
       ],
@@ -372,8 +364,8 @@
             "Part 5 — A motivation rule for your Final Project · Leaves a choice of"
       ]
 ];
-    const OPTIONAL = new Set([]);
-    const WORDY = [["toolTask", "Tool"], ["emmaView", "Emma"], ["emmaReply", "EmmaReply"], ["michaelView", "Michael"], ["michaelReply", "MichaelReply"], ["luisView", "Luis"], ["luisReply", "LuisReply"], ["mustKnow", "Know"], ["should", "Should"], ["aiNeeds", "CARE"], ["aiExpect", "EV"], ["aiMissing", "Missing"], ["mrRespond", "Respond"], ["mrCompetence", "Competence"], ["mrValue", "Value"], ["mrChoice", "Choice"]];
+    const OPTIONAL = new Set(["aiReply", "aiExpect", "aiMissing"]);
+    const WORDY = [["toolTask", "Tool"], ["emmaView", "Emma"], ["emmaReply", "EmmaReply"], ["michaelView", "Michael"], ["michaelReply", "MichaelReply"], ["luisView", "Luis"], ["luisReply", "LuisReply"], ["mustKnow", "Know"], ["should", "Should"], ["aiExpect", "EV"], ["aiMissing", "Missing"], ["mrRespond", "Respond"], ["mrCompetence", "Competence"], ["mrValue", "Value"], ["mrChoice", "Choice"]];
     const BLOCKS = [
       [
             "PART 1 — YOUR TOOL",
@@ -441,11 +433,7 @@
                         "aiReply"
                   ],
                   [
-                        "Which C.A.R.E. needs did its answer support, and which did it frustrate?",
-                        "aiNeeds"
-                  ],
-                  [
-                        "What did it do to Michael's expectancy, and to the value he sees in the task?",
+                        "Did its answer leave Michael a mastery experience, the strongest source of self-efficacy?",
                         "aiExpect"
                   ],
                   [

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Load Budget</title>
+  <title>Three Kinds of Load</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     textarea { resize: vertical; }
@@ -23,6 +23,10 @@
     @media (pointer: coarse) {
       button, .touch-target { min-height: 2.75rem; }
     }
+
+    .choice-opt { cursor: pointer; }
+    .choice-opt:has(input:checked) { background: #5D1725; border-color: #5D1725; color: #fff; }
+    .choice-opt:has(input:focus-visible) { outline: 3px solid #5D1725; outline-offset: 2px; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -63,8 +67,8 @@
     <header class="flex justify-between items-end mb-6 pb-4 border-b border-gray-200 gap-4 flex-wrap">
       <div>
         <p class="text-xs font-bold text-[#5D1725] uppercase tracking-widest mb-1">EPY 3143 · Week 6</p>
-        <h1 class="text-2xl md:text-3xl font-black text-[#5D1725]">The Load Budget</h1>
-        <p class="text-gray-600 font-medium text-sm mt-1">One concept, four lines, and a number</p>
+        <h1 class="text-2xl md:text-3xl font-black text-[#5D1725]">Three Kinds of Load</h1>
+        <p class="text-gray-600 font-medium text-sm mt-1">One concept you teach, its intrinsic, extraneous and germane load, and a limit for your tool</p>
       </div>
       <div class="no-print flex flex-col items-end gap-2">
         <div class="flex gap-2 flex-wrap justify-end">
@@ -84,6 +88,8 @@
         </div>
       </div>
     </header>
+
+    <p id="lockStamp" class="hidden text-xs text-gray-600 mb-3"></p>
 
     <div id="studentInfo" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 print-box">
       <div>
@@ -112,33 +118,33 @@
 
     <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
       <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
-      <p class="text-sm text-amber-900 mb-3">A four-line card for one concept you teach: what's hard, what to cut, what the learner does, and a number. Wrong is fine here. Vague is not.</p>
+      <p class="text-sm text-amber-900 mb-3">Pick one concept you teach. Say what makes it hard by its nature, what adds load without adding learning, and what the learner will do that builds it. Then set a number: how much your tool (the tool you are building for the Final Project) may give a learner at once. Wrong is fine here. Vague is not.</p>
     </div>
 
-    <!-- BEFORE YOU WRITE A LINE -->
+    <!-- BEFORE YOU START -->
     <section class="mb-8 print-box" id="part-0">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Before you write a line</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Before you start</h2>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Answer these before you draft the card.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Answer these first.</p>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
           <label for="concept" class="block text-sm font-bold text-gray-800 mb-1">The concept you want to teach</label>
           <input type="text" id="concept" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., photosynthesis · long division · the subjunctive · supply and demand">
         </div>
         <div>
-          <label for="learner" class="block text-sm font-bold text-gray-800 mb-1">Who are your milestone students?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">The population you defined for your own milestone.</p>
+          <label for="learner" class="block text-sm font-bold text-gray-800 mb-1">Who are the learners in your Milestone?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">The population you defined for your own Milestone.</p>
           <textarea rows="2" id="learner" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="warehouse" class="block text-sm font-bold text-gray-800 mb-1">What do you expect them to know or remember before the new concept?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Name it specifically — a word, a procedure, or a prior concept.</p>
+          <label for="warehouse" class="block text-sm font-bold text-gray-800 mb-1">What must your learners already know before this concept?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Name it: a word, a procedure, or an earlier concept.</p>
           <textarea rows="3" id="warehouse" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="strategy" class="block text-sm font-bold text-gray-800 mb-1">Which strategy is doing the germane work, and why that one?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Pick one: retrieval practice, spacing, interleaving, self-explanation, or dual coding.</p>
+          <label for="strategy" class="block text-sm font-bold text-gray-800 mb-1">Which strategy will the learner use to build the concept?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Pick one: retrieval practice, spacing, interleaving, self-explanation, or dual coding. Say why in one sentence.</p>
           <textarea rows="3" id="strategy" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
@@ -152,9 +158,9 @@
       </div>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="intrinsic" class="block text-sm font-bold text-gray-800 mb-1">How many parts must be held at once, and in what order?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">"Simplify" is not an answer — say what you cut.</p>
-          <textarea rows="4" id="intrinsic" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="intrinsic" class="block text-sm font-bold text-gray-800 mb-1">What makes your concept hard by its nature, even with perfect teaching? That is its intrinsic load.</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Count the parts a learner must hold in mind at once. Lesson steps don't count: name what is hard about the idea itself.</p>
+          <textarea rows="4" id="intrinsic" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., Long division: the learner holds the divisor, the running remainder, the place value and the next digit, all at once. Four parts, and each step changes two of them."></textarea>
         </div>
       </div>
     </section>
@@ -167,9 +173,9 @@
       </div>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="extraneous" class="block text-sm font-bold text-gray-800 mb-1">What will you strip out, and where did it come from?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Include the tool's output, not just the room or the slide — is it clutter on the learner's desk, or clutter for your own convenience?</p>
-          <textarea rows="4" id="extraneous" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="extraneous" class="block text-sm font-bold text-gray-800 mb-1">What in your lesson or your tool's answer adds load without adding learning? That is extraneous load.</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Name the clutter you will cut. A learner's struggles and prior knowledge belong to the concept: they go in Part 1.</p>
+          <textarea rows="4" id="extraneous" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., The tool&#x27;s answer opens with three sentences of praise and a history of the topic. Cut both."></textarea>
         </div>
       </div>
     </section>
@@ -182,23 +188,23 @@
       </div>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="germane" class="block text-sm font-bold text-gray-800 mb-1">What will the learner <strong>do</strong> with it, and what does that build?</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">A picture on a slide is extraneous unless they build or read a structure with it.</p>
+          <label for="germane" class="block text-sm font-bold text-gray-800 mb-1">What will the learner do that builds the concept? That is germane load.</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Name the verb: explain, compare, retrieve, draw. A picture on a slide counts only if they build or read a structure with it.</p>
           <textarea rows="4" id="germane" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
 
-    <!-- PART 4 — THE OUTPUT LIMIT -->
+    <!-- PART 4 — A LIMIT FOR YOUR TOOL -->
     <section class="mb-8 print-box" id="part-4">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 4 — The output limit</h2>
+        <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 4 — A limit for your tool</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Give <strong>a number</strong> — steps, items, or words per turn — and say why.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Give <strong>a number</strong>: steps, items, or words per turn.</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
         <div>
-          <label for="limitNumber" class="block text-sm font-bold text-gray-800 mb-1">The limit, as a number with its unit</label>
+          <label for="limitNumber" class="block text-sm font-bold text-gray-800 mb-1">The limit: how much may your tool give a learner at once?</label>
           <input type="text" id="limitNumber" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="e.g., 3 steps per explanation · 4 items per chunk · 60 words per turn">
         </div>
         <div>
@@ -209,26 +215,30 @@
       </div>
     </section>
 
-    <!-- PART 5 — SWAP AND AUDIT -->
+    <!-- PART 5 — SWAP -->
     <section class="mb-8 print-box page-break" id="part-5">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 5 — Swap and audit</h2>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 5 — Swap</h2>
         <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Trade cards. Three questions only, then revise your own.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Trade with a partner. Read their Parts 1–4.</p>
       <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
-          <label for="auditOf" class="block text-sm font-bold text-gray-800 mb-1">Whose card you audited</label>
-          <input type="text" id="auditOf" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Name(s) and their concept">
+          <label for="auditOf" class="block text-sm font-bold text-gray-800 mb-1">Whose page you read</label>
+          <input type="text" id="auditOf" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Name and their concept">
         </div>
         <div>
-          <label for="auditNotes" class="block text-sm font-bold text-gray-800 mb-1">Your audit</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Could a tool follow this? Whose desk is the extraneous line about? Would the limit survive "just explain the whole thing"?</p>
-          <textarea rows="5" id="auditNotes" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="auditNotes" class="block text-sm font-bold text-gray-800 mb-1">Which of their four answers is weakest? Why?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Is Part 1 about the idea, or about lesson steps? Is Part 2 clutter, or the learner's struggles? Would the limit survive "just explain the whole thing"?</p>
+          <textarea rows="4" id="auditNotes" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="revision" class="block text-sm font-bold text-gray-800 mb-1">What you changed after the audit</label>
-          <p class="text-xs text-gray-500 mb-2 no-print">Name the line. "Nothing" needs a reason.</p>
+          <label for="auditFix" class="block text-sm font-bold text-gray-800 mb-1">One change that would fix it</label>
+          <textarea rows="2" id="auditFix" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+        </div>
+        <div>
+          <label for="revision" class="block text-sm font-bold text-gray-800 mb-1">What did you change on your own page after the swap?</label>
+          <p class="text-xs text-gray-500 mb-2 no-print">Name the part. "Nothing" needs a reason.</p>
           <textarea rows="3" id="revision" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
@@ -239,15 +249,15 @@
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
         <h2 class="text-lg font-black text-gray-800 border-l-4 border-amber-500 pl-3">Part 6 — The mnemonic test</h2>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Not graded — feeds Reflection 4.</p>
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Not graded. Feeds Reflection 4.</p>
       <div class="bg-amber-50/60 p-5 border border-amber-200 rounded-lg space-y-5">
         <div>
-          <label for="mnemonicOut" class="block text-sm font-bold text-gray-800 mb-1">What your engine produced — both prompts</label>
+          <label for="mnemonicOut" class="block text-sm font-bold text-gray-800 mb-1">What the AI produced: both prompts</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Prompt 1: <code>Make me a mnemonic for [your concept's parts].</code> Prompt 2, fresh chat: <code>What would a learner have to already understand for a mnemonic for [your concept] to be useful rather than a substitute for understanding? List it; do not make the mnemonic.</code></p>
           <textarea rows="5" id="mnemonicOut" class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="mnemonicHold" class="block text-sm font-bold text-gray-800 mb-1">Which answer belongs in your tool — and which is your <strong>off-limits</strong> line?</label>
+          <label for="mnemonicHold" class="block text-sm font-bold text-gray-800 mb-1">Which of the two answers belongs in your tool? Why?</label>
           <p class="text-xs text-gray-500 mb-2 no-print">Some concepts need the list held first. Say which yours is.</p>
           <textarea rows="3" id="mnemonicHold" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
@@ -259,6 +269,7 @@
       or <strong>Save &amp; Download PDF</strong> to submit on Canvas. Clearing your browser data clears this page.
     </footer>
   </div>
+
 
   <div id="copyModal" role="dialog" aria-modal="true" aria-labelledby="copyModalTitle"
        class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
@@ -289,19 +300,19 @@
       ],
       [
             "concept",
-            "Before you write a line · Concept"
+            "Before you start · Concept"
       ],
       [
             "learner",
-            "Before you write a line · Milestone students"
+            "Before you start · Milestone learners"
       ],
       [
             "warehouse",
-            "Before you write a line · Warehouse"
+            "Before you start · Prior knowledge"
       ],
       [
             "strategy",
-            "Before you write a line · Strategy"
+            "Before you start · Strategy"
       ],
       [
             "intrinsic",
@@ -317,23 +328,27 @@
       ],
       [
             "limitNumber",
-            "Part 4 — The output limit · The number"
+            "Part 4 — A limit for your tool · The number"
       ],
       [
             "limitWhy",
-            "Part 4 — The output limit · Why that number"
+            "Part 4 — A limit for your tool · Why that number"
       ],
       [
             "auditOf",
-            "Part 5 — Swap and audit · Audited"
+            "Part 5 — Swap · Audited"
       ],
       [
             "auditNotes",
-            "Part 5 — Swap and audit · Audit"
+            "Part 5 — Swap · Weakest answer"
+      ],
+      [
+            "auditFix",
+            "Part 5 — Swap · One change"
       ],
       [
             "revision",
-            "Part 5 — Swap and audit · Revision"
+            "Part 5 — Swap · Revision"
       ],
       [
             "mnemonicOut",
@@ -345,25 +360,25 @@
       ]
 ];
     const OPTIONAL = new Set(["mnemonicOut", "mnemonicHold"]);
-    const WORDY = [["warehouse", "Warehouse"], ["strategy", "Strategy"], ["intrinsic", "Intrinsic"], ["extraneous", "Extraneous"], ["germane", "Germane"], ["limitWhy", "Limit"], ["auditNotes", "Audit"], ["revision", "Revise"], ["mnemonicHold", "Mnemonic"]];
+    const WORDY = [["warehouse", "Prior"], ["strategy", "Strategy"], ["intrinsic", "Intrinsic"], ["extraneous", "Extraneous"], ["germane", "Germane"], ["limitWhy", "Limit"], ["auditNotes", "Weakest"], ["auditFix", "Fix"], ["revision", "Revise"], ["mnemonicHold", "Mnemonic"]];
     const BLOCKS = [
       [
-            "BEFORE YOU WRITE A LINE",
+            "BEFORE YOU START",
             [
                   [
                         "The concept you want to teach",
                         "concept"
                   ],
                   [
-                        "Who are your milestone students?",
+                        "Who are the learners in your Milestone?",
                         "learner"
                   ],
                   [
-                        "What do you expect them to know or remember before the new concept?",
+                        "What must your learners already know before this concept?",
                         "warehouse"
                   ],
                   [
-                        "Which strategy is doing the germane work, and why that one?",
+                        "Which strategy will the learner use to build the concept?",
                         "strategy"
                   ]
             ],
@@ -373,7 +388,7 @@
             "PART 1 — INTRINSIC LOAD",
             [
                   [
-                        "How many parts must be held at once, and in what order?",
+                        "What makes your concept hard by its nature, even with perfect teaching? That is its intrinsic load.",
                         "intrinsic"
                   ]
             ],
@@ -383,7 +398,7 @@
             "PART 2 — EXTRANEOUS LOAD",
             [
                   [
-                        "What will you strip out, and where did it come from?",
+                        "What in your lesson or your tool's answer adds load without adding learning? That is extraneous load.",
                         "extraneous"
                   ]
             ],
@@ -393,17 +408,17 @@
             "PART 3 — GERMANE LOAD",
             [
                   [
-                        "What will the learner do with it, and what does that build?",
+                        "What will the learner do that builds the concept? That is germane load.",
                         "germane"
                   ]
             ],
             ""
       ],
       [
-            "PART 4 — THE OUTPUT LIMIT",
+            "PART 4 — A LIMIT FOR YOUR TOOL",
             [
                   [
-                        "The limit, as a number with its unit",
+                        "The limit: how much may your tool give a learner at once?",
                         "limitNumber"
                   ],
                   [
@@ -414,18 +429,22 @@
             ""
       ],
       [
-            "PART 5 — SWAP AND AUDIT",
+            "PART 5 — SWAP",
             [
                   [
-                        "Whose card you audited",
+                        "Whose page you read",
                         "auditOf"
                   ],
                   [
-                        "Your audit",
+                        "Which of their four answers is weakest? Why?",
                         "auditNotes"
                   ],
                   [
-                        "What you changed after the audit",
+                        "One change that would fix it",
+                        "auditFix"
+                  ],
+                  [
+                        "What did you change on your own page after the swap?",
                         "revision"
                   ]
             ],
@@ -435,11 +454,11 @@
             "PART 6 — THE MNEMONIC TEST",
             [
                   [
-                        "What your engine produced — both prompts",
+                        "What the AI produced: both prompts",
                         "mnemonicOut"
                   ],
                   [
-                        "Which answer belongs in your tool — and which is your off-limits line?",
+                        "Which of the two answers belongs in your tool? Why?",
                         "mnemonicHold"
                   ]
             ],
@@ -447,6 +466,43 @@
       ]
 ];
     const STORAGE_KEY = 'epy3143_wk06_workbench_v1';
+    const LOCK_HASH = null;
+    const LOCK_KEY = STORAGE_KEY + '_unlocked';
+    function codeHash(code) {
+      const norm = 'epy3143:' + code.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const bytes = new TextEncoder().encode(norm);
+      let h = 0x811c9dc5;
+      for (const b of bytes) { h ^= b; h = Math.imul(h, 0x01000193) >>> 0; }
+      return h >>> 0;
+    }
+    function unlockedAt() { try { return localStorage.getItem(LOCK_KEY) || ''; } catch (e) { return ''; } }
+    function showStamp() {
+      const t = unlockedAt(), s = document.getElementById('lockStamp');
+      if (!LOCK_HASH || !t || !s) return;
+      s.textContent = 'Class code entered ' + t + '.';
+      s.classList.remove('hidden');
+    }
+    function setupLock() {
+      const screen = document.getElementById('lockScreen');
+      if (!LOCK_HASH || !screen) return;
+      const main = document.querySelector('body > div.max-w-4xl');
+      if (unlockedAt()) { screen.remove(); showStamp(); return; }
+      main.inert = true; main.setAttribute('aria-hidden', 'true');
+      const input = document.getElementById('lockInput');
+      input.focus();
+      document.getElementById('lockForm').addEventListener('submit', e => {
+        e.preventDefault();
+        if (codeHash(input.value) !== LOCK_HASH) {
+          document.getElementById('lockMsg').textContent = 'That is not the code. Check with the room.';
+          return;
+        }
+        const n = new Date(), pad = x => String(x).padStart(2, '0');
+        const t = n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate()) + ' ' + pad(n.getHours()) + ':' + pad(n.getMinutes());
+        try { localStorage.setItem(LOCK_KEY, t); } catch (err) {}
+        main.inert = false; main.removeAttribute('aria-hidden');
+        screen.remove(); showStamp();
+      });
+    }
     const REQUIRED = FIELDS.filter(([id]) => !OPTIONAL.has(id));
     const ids = FIELDS.map(f => f[0]);
     const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
@@ -509,10 +565,11 @@
     }
     function buildText() {
       const L = [];
-      L.push('EPY 3143 - Week 6 - The Load Budget'); L.push(RULE);
+      L.push('EPY 3143 - Week 6 - Three Kinds of Load'); L.push(RULE);
       L.push('Name:  ' + (val('studentName') || '(blank)'));
       L.push('Field: ' + (val('gradeSubject') || '(blank)'));
       L.push('Date:  ' + (val('sessionDate') || '(blank)'));
+      if (LOCK_HASH) L.push('Class code entered: ' + (unlockedAt() || '(not entered)'));
       BLOCKS.forEach(b => blockText(L, b));
       L.push(RULE);
       const missing = REQUIRED.filter(([id]) => !val(id)).length;
@@ -522,7 +579,7 @@
       return L.join('\n');
     }
     function buildPartText(i) {
-      const L = ['EPY 3143 - Week 6 - The Load Budget', 'Name: ' + (val('studentName') || '(blank)')];
+      const L = ['EPY 3143 - Week 6 - Three Kinds of Load', 'Name: ' + (val('studentName') || '(blank)')];
       blockText(L, BLOCKS[i]);
       return L.join('\n');
     }
@@ -599,11 +656,36 @@
       if (!confirm('Clear all your responses? This cannot be undone.')) return;
       localStorage.removeItem(STORAGE_KEY);
       ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      document.querySelectorAll('.choice-why').forEach(w => w.classList.add('hidden'));
+      document.querySelectorAll('[id^="checkMsg-"]').forEach(m => { m.textContent = ''; });
       refresh();
     }
-    function refresh() { updateMirrors(); updateStamp(); }
+    function syncChoices() {
+      document.querySelectorAll('input[data-choice]').forEach(h => {
+        document.querySelectorAll('input[name="' + h.id + '"]').forEach(r => { r.checked = (r.value === h.value); });
+      });
+    }
+    function checkPart(i) {
+      const sec = document.getElementById('part-' + i);
+      const whys = sec.querySelectorAll('.choice-why');
+      const msg = document.getElementById('checkMsg-' + i);
+      const open = [...whys].filter(w => !val(w.dataset.whyFor)).length;
+      if (open) { msg.textContent = 'Sort all of them first — ' + open + ' still open.'; return; }
+      let same = 0;
+      whys.forEach(w => {
+        const mine = val(w.dataset.whyFor).split(' · ')[0];
+        const ok = mine === w.dataset.answer;
+        if (ok) same++;
+        if (!w.dataset.base) w.dataset.base = w.innerHTML;
+        w.innerHTML = '<strong>' + (ok ? 'Same as the key (' : 'The key says ') + w.dataset.answer + (ok ? ').' : ', you said ' + mine + '.') + '</strong> ' + w.dataset.base;
+        w.classList.remove('hidden');
+      });
+      msg.textContent = same + ' of ' + whys.length + ' match the key. Where yours differs, read the reason before you decide who is right.';
+    }
+    function refresh() { syncChoices(); updateMirrors(); updateStamp(); }
 
     document.addEventListener('DOMContentLoaded', () => {
+      setupLock();
       buildMirrors(); guardPaste(); restoreAll();
       const d = document.getElementById('sessionDate');
       if (d && !d.value) {
@@ -613,6 +695,10 @@
       ids.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', () => { saveAll(); refresh(); });
+      });
+      document.querySelectorAll('input[data-choice]').forEach(h => {
+        document.querySelectorAll('input[name="' + h.id + '"]').forEach(r =>
+          r.addEventListener('change', () => { h.value = r.value; saveAll(); refresh(); }));
       });
       document.getElementById('copyModal').addEventListener('click', e => { if (e.target.id === 'copyModal') closeCopyModal(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCopyModal(); });
