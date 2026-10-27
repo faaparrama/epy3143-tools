@@ -118,7 +118,7 @@
 
     <div class="bg-amber-50 border border-amber-300 rounded-xl p-5 mb-6 no-print">
       <p class="text-sm font-bold text-amber-800 uppercase mb-1">Before you start</p>
-      <p class="text-sm text-amber-900 mb-3">Complete Parts 1–3. Part 4 is your reply to a classmate. <em>Copy this part</em> pastes each straight into Canvas.</p>
+      <p class="text-sm text-amber-900 mb-3">Name the thinking each student in the case did, sort six cases of transfer, then write one item that tests far transfer in your subject. Part 4 checks a classmate's item.</p>
     </div>
 
     <!-- PART 1 — THREE STUDENTS, THREE THINKING  -->
@@ -193,7 +193,7 @@
     <section class="mb-8 print-box page-break" id="part-2">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
         <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 3 — An item that tests far transfer</h2>
-        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Discussion post · Readiness Check</span><button type="button" onclick="copyPart(2)" class="no-print text-xs font-bold text-[#5D1725] border border-[#5D1725] hover:bg-rose-50 px-3 py-1 rounded transition">Copy this part</button></div>
+        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span><button type="button" onclick="copyPart(2)" class="no-print text-xs font-bold text-[#5D1725] border border-[#5D1725] hover:bg-rose-50 px-3 py-1 rounded transition">Copy this part</button></div>
       </div>
       <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Take a concept your students can do on the homework and not on a new kind of problem.</p>
       <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
@@ -219,25 +219,25 @@
       </div>
     </section>
 
-    <!-- PART 4 — REPLY TO ONE CLASSMATE -->
+    <!-- PART 4 — SWAP -->
     <section class="mb-8 print-box" id="part-3">
       <div class="flex justify-between items-center mb-1 gap-3 flex-wrap">
-        <h2 class="text-lg font-black text-[#5D1725] border-l-4 border-[#5D1725] pl-3">Part 4 — Reply to one classmate</h2>
-        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Discussion post · Readiness Check</span><button type="button" onclick="copyPart(3)" class="no-print text-xs font-bold text-[#5D1725] border border-[#5D1725] hover:bg-rose-50 px-3 py-1 rounded transition">Copy this part</button></div>
+        <h2 class="text-lg font-black text-gray-800 border-l-4 border-gray-400 pl-3">Part 4 — Swap</h2>
+        <div class="flex items-center gap-2"><span class="text-xs font-bold text-[#5D1725] bg-rose-50 px-2 py-1 rounded">Readiness Check</span></div>
       </div>
-      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Choose one classmate's item B. Reply outside your subject if you can.</p>
-      <div class="bg-rose-50/50 p-5 border border-rose-200 rounded-lg space-y-5">
+      <p class="text-sm text-gray-600 mb-4 font-medium pl-4">Trade pages with a partner, outside your subject if you can. Read their item B.</p>
+      <div class="bg-gray-50 p-5 border border-gray-200 rounded-lg space-y-5">
         <div>
-          <label for="replyTo" class="block text-sm font-bold text-gray-800 mb-1">Whose item you read</label>
-          <input type="text" id="replyTo" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Classmate and their concept">
+          <label for="swapWho" class="block text-sm font-bold text-gray-800 mb-1">Whose item you read</label>
+          <input type="text" id="swapWho" data-nopaste class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder="Partner and their concept">
         </div>
         <div>
-          <label for="replySolve" class="block text-sm font-bold text-gray-800 mb-1">Is their item B far transfer, or near transfer with new numbers? Why?</label>
-          <textarea rows="4" id="replySolve" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="swapJudge" class="block text-sm font-bold text-gray-800 mb-1">Is their item B far transfer, or near transfer with new numbers? Why?</label>
+          <textarea rows="3" id="swapJudge" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
         <div>
-          <label for="replyHonest" class="block text-sm font-bold text-gray-800 mb-1">One change that would make it far transfer</label>
-          <textarea rows="2" id="replyHonest" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
+          <label for="swapFix" class="block text-sm font-bold text-gray-800 mb-1">One change that would make it far transfer</label>
+          <textarea rows="2" id="swapFix" data-nopaste class="w-full border border-gray-300 p-3 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none" placeholder=""></textarea>
         </div>
       </div>
     </section>
@@ -248,6 +248,19 @@
     </footer>
   </div>
 
+
+  <div id="lockScreen" role="dialog" aria-modal="true" aria-labelledby="lockTitle"
+       class="no-print fixed inset-0 bg-gray-100 z-50 flex items-center justify-center p-4">
+    <form id="lockForm" class="bg-white rounded-xl shadow-lg border-t-8 border-[#5D1725] p-6 max-w-md w-full">
+      <h2 id="lockTitle" class="text-xl font-black text-[#5D1725] mb-2">Class code</h2>
+      <p class="text-sm text-gray-700 mb-4">This workbench is completed in class. Enter the code Dr. Parra-Martinez gives the room.</p>
+      <label for="lockInput" class="block text-xs font-bold text-gray-700 uppercase mb-1">Code</label>
+      <input id="lockInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+             class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-[#5D1725] focus:outline-none">
+      <p id="lockMsg" role="alert" class="text-sm font-semibold text-[#5D1725] mt-2"></p>
+      <button type="submit" class="mt-3 bg-[#5D1725] hover:bg-[#3D0A14] text-white font-bold py-2 px-5 rounded transition">Unlock</button>
+    </form>
+  </div>
 
   <div id="copyModal" role="dialog" aria-modal="true" aria-labelledby="copyModalTitle"
        class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
@@ -337,20 +350,20 @@
             "Part 3 — An item that tests far transfer · D"
       ],
       [
-            "replyTo",
-            "Part 4 — Reply to one classmate · Classmate"
+            "swapWho",
+            "Part 4 — Swap · Partner"
       ],
       [
-            "replySolve",
-            "Part 4 — Reply to one classmate · Far or near?"
+            "swapJudge",
+            "Part 4 — Swap · Far or near?"
       ],
       [
-            "replyHonest",
-            "Part 4 — Reply to one classmate · One change"
+            "swapFix",
+            "Part 4 — Swap · One change"
       ]
 ];
     const OPTIONAL = new Set([]);
-    const WORDY = [["carlos", "Carlos"], ["ethan", "Ethan"], ["maddie", "Maddie"], ["pair", "Pair"], ["tNotice", "Notice"], ["itemA", "A"], ["itemB", "B"], ["itemC", "C"], ["itemD", "D"], ["replySolve", "Judge"], ["replyHonest", "Fix"]];
+    const WORDY = [["carlos", "Carlos"], ["ethan", "Ethan"], ["maddie", "Maddie"], ["pair", "Pair"], ["tNotice", "Notice"], ["itemA", "A"], ["itemB", "B"], ["itemC", "C"], ["itemD", "D"], ["swapJudge", "Judge"], ["swapFix", "Fix"]];
     const BLOCKS = [
       [
             "PART 1 — THREE STUDENTS, THREE THINKING PROCESSES",
@@ -431,26 +444,26 @@
             ""
       ],
       [
-            "PART 4 — REPLY TO ONE CLASSMATE",
+            "PART 4 — SWAP",
             [
                   [
                         "Whose item you read",
-                        "replyTo"
+                        "swapWho"
                   ],
                   [
                         "Is their item B far transfer, or near transfer with new numbers? Why?",
-                        "replySolve"
+                        "swapJudge"
                   ],
                   [
                         "One change that would make it far transfer",
-                        "replyHonest"
+                        "swapFix"
                   ]
             ],
             ""
       ]
 ];
     const STORAGE_KEY = 'epy3143_wk08_workbench_v1';
-    const LOCK_HASH = null;
+    const LOCK_HASH = 276353442;
     const LOCK_KEY = STORAGE_KEY + '_unlocked';
     function codeHash(code) {
       const norm = 'epy3143:' + code.toLowerCase().replace(/[^a-z0-9]/g, '');
